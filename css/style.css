@@ -3,7 +3,7 @@
 /**********************************/
 body {
     color: #666666;
-    background: #CCFFCC;
+    background: #94c194;
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -47,7 +47,7 @@ a:focus {
     width: 100%;
     padding: 15px;
     float: left;
-    background: #CCFFCC;
+    background: #94c194;
 }
 
 .wrapper .sidebar-header,
@@ -112,7 +112,7 @@ a:focus {
         content: "";
         width: 100%;
         height: 30px;
-        background: #CCFFCC;
+        background: #94c194;
         z-index: 1;
     }
     
@@ -128,12 +128,13 @@ a:focus {
         position: fixed;
         width: 300px;
         height: 100%;
-        margin-left: -250px;
+        left: 0;
         float: left;
         overflow: auto;
         scrollbar-width: thin;
         scrollbar-color: gray;
         z-index: 2;
+        margin-left: 0;
     }
 
     .wrapper .sidebar:hover {
@@ -350,7 +351,7 @@ a:focus {
 
 .large-btn .content-inner {
     font-size: 0;
-    border-bottom: 30px solid #CCFFCC;
+    border-bottom: 30px solid #94c194;
 }
 
 .large-btn .btn {
@@ -425,7 +426,7 @@ a:focus {
     position: relative;
     padding: 60px 30px;
     background: #ffffff;
-    border-bottom: 30px solid #CCFFCC;
+    border-bottom: 30px solid #94c194;
 }
 
 
@@ -493,7 +494,7 @@ a:focus {
     position: relative;
     padding: 60px 30px;
     background: #ffffff;
-    border-bottom: 30px solid #CCFFCC;
+    border-bottom: 30px solid #94c194;
 }
 
 .education .edu-col {
@@ -566,7 +567,7 @@ a:focus {
     position: relative;
     padding: 60px 30px;
     background: #ffffff;
-    border-bottom: 30px solid #CCFFCC;
+    border-bottom: 30px solid #94c194;
 }
 
 .experience .exp-col {
@@ -653,7 +654,7 @@ a:focus {
     position: relative;
     padding: 60px 30px 30px 30px;
     background: #ffffff;
-    border-bottom: 30px solid #CCFFCC;
+    border-bottom: 30px solid #94c194;
 }
 
 .service .srv-col {
@@ -700,7 +701,7 @@ a:focus {
     position: relative;
     padding: 60px 30px 30px 30px;
     background: #ffffff;
-    border-bottom: 30px solid #CCFFCC;
+    border-bottom: 30px solid #94c194;
 }
 
 .portfolio #portfolio-flters {
@@ -847,7 +848,7 @@ a:focus {
 .review {
     position: relative;
     background: #ffffff;
-    border-bottom: 30px solid #CCFFCC;
+    border-bottom: 30px solid #94c194;
 }
 
 .review .content-inner {
@@ -1074,7 +1075,7 @@ a:focus {
     position: relative;
     width: 100%;
     padding: 30px 30px 0 30px;
-    background: #CCFFCC;
+    background: #94c194;
 }
 
 .footer .col-md-6:last-child {
