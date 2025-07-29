@@ -197,7 +197,7 @@ a:focus {
         padding: 15px;
         font-size: 0;
         text-align: center;
-        background: #250d02;
+        background: #94c194;
     }
     
     .sidebar .sidebar-footer a {
@@ -208,8 +208,8 @@ a:focus {
         margin: 0 15px 15px 0;
         text-align: center;
         font-size: 18px;
-        color: #250d02;
-        background: #5ac6ea;
+        color: #94c194;
+        background: #94c194;
     }
     
     .sidebar .sidebar-footer a:last-child {
@@ -651,26 +651,28 @@ a:focus {
 /*********** Service CSS **********/
 /**********************************/
 .service {
-    position: relative;
-    padding: 60px 30px 30px 30px;
+    position: center;
+    padding: 60px;
     background: #ffffff;
     border-bottom: 30px solid #94c194;
 }
 
 .service .srv-col {
-    position: relative;
+    text-align: center;
     width: 100%;
     margin-bottom: 30px;
 }
 
 .service .srv-col i {
-    font-size: 30px;
+    position: center;
+    font-size: 70px;
     color: #5ac6ea;
     margin-bottom: 15px;
 }
 
 .service .srv-col h3 {
-    font-size: 20px;
+    position: center;
+    font-size: 50px;
     font-weight: 700;
     letter-spacing: 2px;
     margin-bottom: 5px;
