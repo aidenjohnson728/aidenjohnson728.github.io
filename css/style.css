@@ -337,6 +337,7 @@ a:focus {
 }
 
 .header h2 {
+    color:#250d02;
     display: inline-block;
     margin: 0;
     height: 25px;
@@ -557,6 +558,7 @@ a:focus {
 }
 
 .education .edu-col h3 {
+    color: #250d02;
     font-size: 20px;
     font-weight: 700;
     letter-spacing: 2px;
@@ -638,6 +640,7 @@ a:focus {
 }
 
 .experience .exp-col h4 {
+    color:#250d02;
     font-size: 14px;
     font-weight: 400;
     font-style: italic;
@@ -645,6 +648,7 @@ a:focus {
 }
 
 .experience .exp-col h5 {
+    color:#250d02;
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 10px;
