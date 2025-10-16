@@ -1,255 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Integrating Critical Pedagogy into Undergraduate Software Design</title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="Resume Website Template Free Download" name="keywords">
-        <meta content="Resume Website Template Free Download" name="description">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aiden Johnson — Art Portfolio</title>
 
-        <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+    <!-- Lightbox for click-to-expand -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
 
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Global styling */
+        body {
+            margin: 0;
+            background-color: #94c194; /* Original bright green-blue */
+            font-family: sans-serif; /* clean sans-serif */
+            color: white;
+            text-align: center;
+        }
 
-        <!-- CSS Libraries -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-        <link href="lib/slick/slick.css" rel="stylesheet">
-        <link href="lib/slick/slick-theme.css" rel="stylesheet">
-        <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+        h1 {
+            margin-top: 40px;
+            font-weight: 600;
+            font-size: 2.5em;
+        }
 
-        <!-- Template Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
-    </head>
+        h5 {
+            font-weight: 400;
+            margin-bottom: 10px;
+            font-family: sans-serif; 
+        }
 
-    <body data-spy="scroll" data-target=".navbar" data-offset="51">
-        <div class="wrapper">
-            <div class="sidebar">
-                <div class="sidebar-content">
-                    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-                        <a href="#" class="navbar-brand">Navigation</a>
-                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarCollapse">
-                            <ul class="nav navbar-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#header">Critical Pedagogy <br> in Software Design<i class="fa fa-home"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#about">Motivations<i class="fa fa-user"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#education">Methods<i class="fa fa-book"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#experience">Results<i class="fa fa-star"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        /* Portfolio grid */
+        .portfolio {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px; 
+            padding: 0; 
+            max-width: none;
+            margin: 0;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            aspect-ratio: 3 / 4; 
+            object-fit: cover;
+            border: none;
+            border-radius: 0; 
+            box-shadow: none; 
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .portfolio-item img:hover {
+            transform: scale(1.03);
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-block;
+            margin: 30px 0 50px;
+            font-size: 1.1em;
+            color: white;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.2s ease;
+        }
+
+        .back-link:hover {
+            border-bottom: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 style="color: #032d3a;">Aiden Johnson — Studio Art Portfolio</h2>
+    <p style="color:#032d3a; ">Click any image to expand</p>
+
+    <div class="portfolio">
+        <a href="img/AidenHeadshot.jpg" data-lightbox="portfolio" data-title="Artwork 1" class="portfolio-item" target="_blank">
+            <img src="img/AidenHeadshot.jpg" alt="Artwork 1">
+        </a>
+
+        <a href="img/AidenHeadshot.jpg" data-lightbox="portfolio" data-title="Artwork 1" class="portfolio-item" target="_blank">
+            <img src="img/AidenHeadshot.jpg" alt="Artwork 1">
+        </a>
+
+        <a href="img/AidenHeadshot.jpg" data-lightbox="portfolio" data-title="Artwork 1" class="portfolio-item" target="_blank">
+            <img src="img/AidenHeadshot.jpg" alt="Artwork 1">
+        </a>
+
+        <a href="img/AidenHeadshot.jpg" data-lightbox="portfolio" data-title="Artwork 1" class="portfolio-item" target="_blank">
+            <img src="img/AidenHeadshot.jpg" alt="Artwork 1">
+        </a>
+
+        <a href="img/AidenHeadshot.jpg" data-lightbox="portfolio" data-title="Artwork 1" class="portfolio-item" target="_blank">
+            <img src="img/AidenHeadshot.jpg" alt="Artwork 1">
+        </a>
+
+        <a href="img/AidenHeadshot.jpg" data-lightbox="portfolio" data-title="Artwork 1" class="portfolio-item" target="_blank">
+            <img src="img/AidenHeadshot.jpg" alt="Artwork 1">
+        </a>
+
+        <a href="img/AidenHeadshot.jpg" data-lightbox="portfolio" data-title="Artwork 1" class="portfolio-item" target="_blank">
+            <img src="img/AidenHeadshot.jpg" alt="Artwork 1">
+        </a>
+
+        <a href="img/AidenHeadshot.jpg" data-lightbox="portfolio" data-title="Artwork 1" class="portfolio-item" target="_blank">
+            <img src="img/AidenHeadshot.jpg" alt="Artwork 1">
+        </a>
+
+        <a href="img/AidenHeadshot.jpg" data-lightbox="portfolio" data-title="Artwork 1" class="portfolio-item" target="_blank">
+            <img src="img/AidenHeadshot.jpg" alt="Artwork 1">
+        </a>
+
+        <a href="img/AidenHeadshot.jpg" data-lightbox="portfolio" data-title="Artwork 1" class="portfolio-item" target="_blank">
+            <img src="img/AidenHeadshot.jpg" alt="Artwork 1">
+        </a>
+
+        <a href="img/AidenHeadshot.jpg" data-lightbox="portfolio" data-title="Artwork 1" class="portfolio-item" target="_blank">
+            <img src="img/AidenHeadshot.jpg" alt="Artwork 1">
+        </a>
+
+        <a href="img/AidenHeadshot.jpg" data-lightbox="portfolio" data-title="Artwork 1" class="portfolio-item" target="_blank">
+            <img src="img/AidenHeadshot.jpg" alt="Artwork 1">
+        </a>
+
+    </div>
+
+    <!-- Home Page Start-->
+    <div class="experience" id="experience">
+        <div class="content-inner">
+            <div class="content-header">
+                <h2><a class="portfolio-title" style="color: #032d3a" href="https://aidenjohnson728.github.io" >Back to Home Page</h2> 
             </div>
-            <div class="content">
-                <!-- Header Start -->
-                <div class="header" id="header">
-                    <div class="content-inner">
-
-                        <h1>Critical Pedagogy <br>in Software Design</h1>
-                        <h5>Aiden Johnson, Aurelia Peterson-Rajalingam, Aadarsh Padiyath, and Jean Salac</h5>
-                        <h2></h2>
-                        <div class="typed-text">Motivations, Methods, Results</div>
-                    </div>
-                </div>
-                <!-- Header End -->
-                
-                <!-- Large Button Start -->
-                <div class="large-btn">
-                    <div class="content-inner">
-                    </div>
-                </div>
-                <!-- Large Button End -->
-                
-                                <!-- Motivations Start -->
-                <div class="about" id="about">
-                    <div class="content-inner">
-                        <div class="content-header">
-                            <h2>Motivations</h2>
-                        </div>
-
-                        <div class="motivation-text" style="color: #222">
-                            <img src="img/soapDispenser.png" alt="Soap dispenser not recognizing dark skin" style="width:50%; max-width:400px; display:block; margin: 0 auto 20px auto;">
-
-                            <p>
-                                There are several well-documented instances of software failing to accommodate all people. One famous example is soap dispensers that do not recognize users with deeper skin tones. Designers are likely not intentionally trying to exclude users. Rather, they have not been trained to think about inclusive design practices. This is a systemic issue that can be addressed through education.
-                            </p>
-
-                            <p>
-                                These cases are probably not malicious attempts to exclude users, but more likely the result of implicit decision making. Intentional or not, these decisions result in differential impact for many marginalized users. It is for this reason that integrating inclusive design principles into software design education is necessary in a world growing toward technological ubiquity. That integration begins in undergraduate teaching.
-                            </p>
-
-                            <p>
-                                Other researchers have attempted to incorporate ethics and critical pedagogy into Computer Science education. As <a href="https://dl.acm.org/doi/10.1145/3632620.3671109" style="color: #5ac6ea" target="_blank">Michelle Tran</a> has found, integration of ethics and critical pedagogy into one final class at the end of college was not necessarily enough to stimulate significant growth of ethical understanding. It was found by <a href="https://web.engr.oregonstate.edu/~burnett/Reprints/icer24-beyondAwareness-garcia.pdf" style="color: #5ac6ea" target="_blank">Rosalinda Garcia</a> that integration throughout the entire academic progression was much more effective.
-                            </p>
-
-                            <p>
-                                With that in mind, software design was the perfect candidate to introduce concepts of ethics and critical pedagogy, as the course is primarily taken by first and second-year students.
-                            </p>
-
-                            <p>
-                                Because measuring ethical reasoning in computing is difficult, previous research has almost entirely been composed of qualitative analysis. We are among the first to use a validated survey—titled the Crit Con Index—to measure changes in attitudes towards critical reflection and agency.
-                            </p>
-
-                            <p>
-                                This allowed us to quantitatively tackle the extent to which the integration of critical pedagogy in post-secondary software design education changes students’ attitudes. With qualitative analysis, we were further able to make inferences toward how and why critical pedagogy in software design education may shape students’ reflection and agency.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Motivations End -->
-
-                 
-                <!-- Methods Start -->
-                <div class="education" id="education">
-                    <div class="content-inner">
-                        <div class="content-header">
-                            <h2>Methods</h2>
-                        </div>
-                        <div class="method-text" style="color: #222">
-                            <p>
-                                For this study, twenty-three Carleton students consented to having their classwork data analyzed, while five additionally consented to interviews. Jean integrated critical pedagogy into her Software Design class at Carleton College, utilizing two strategies from prior work. The first strategy was the <a href="https://faculty.washington.edu/ajko/papers/Oleson2022CIDER.pdf" style="color: #5ac6ea" target="_blank">CIDER elicitation technique</a>. In the class—after every technical milestone—students used the CIDER elicitation technique to constantly rework their projects to be more inclusive. The second strategy was making explicit the values embedded in technology. By revealing the values ingrained in technology, students were able to recognize things in their technology that had previously gone unnoticed. These class assignments all build up to a database-backed website in Flask, which was later analyzed.
-                            </p>
-
-                            <p>
-                                To gather quantitative data, students took the Critical Reflection and Agency in Computing Index—CritCon Index for short. This index measured attitudes towards critical reflection and agency in Computer Science. Students took this test at the start and end of class. Then, these non-parametric statistical tests were analyzed for our research. We used Cronbach’s alpha to check the reliability of results across operationalizations (basically, the grouping of questions meant to gauge the same idea). If the operationalization had a Cronbach’s alpha over 0.7, it was analyzed with an average value. If the operationalization did not pass the threshold, it was not averaged and questions were analyzed separately. Depending on the symmetry of the question’s/operationalization’s distribution, either the Wilcoxon Signed Rank test or the Sign Test was utilized. Wilcoxon was used on symmetric data while the Sign Test was used on asymmetric data. We then gathered the r effect sizes from Wilcoxon Signed Rank Test results and the Cliff’s delta from Sign Test results. The larger the value, the greater the effect the class had at tackling those specific concepts in technology.
-                            </p>
-
-                            <p>
-                                For qualitative analysis, Aurelia and I led the analysis under the guidance of Aadarsh and Jean. The analysis of critical reflection in this study was conducted in two phases: team analysis and individual analysis. Data was sourced from student work, team repositories, and in-class activities. Aurelia and I used the CIDER framework to guide initial coding of assumptions and developed additional categories through Affinity Diagramming. We inductively created a framework for proposed improvements. Our work process was to individually code the content, and then come to consensus together on the final codes. Additional categories were made because some of the codes were too general in the original framework and needed specificity. For example, “Prior Knowledge” was broken down into categories like “Situational Knowledge,” “Technical Knowledge,” or “Web Familiarity.” A refined codebook was implemented after cycles of work. The improvements that users came up with were inductively coded into broad categories. In the case of disagreements between Aurelia and I, we settled through discussion.
-                            </p>
-
-                            <p>
-                                In addition to coding reflections and proposed improvements, Aurelia and I conducted a Critical Agency Analysis to evaluate whether teams implemented their proposed improvements onto their website or not. If the proposed implementations were implemented, then they were tallied with a “yes.” If not, a “no” was tallied.
-                            </p>
-
-                            <p>
-                                In addition to analyzing student reflection, we also qual-coded some assignments for Critical Agency Analysis. We started out with a deductive framework to analyze assignments with; however, after our first cycle we found the framework given incongruent with the data gathered. We then created our own inductive framework that we then coded with. This framework evolved over four rounds of coding and included major categories: Factors Behind Differential Impact, Kinds of Impact, and Values. The final coding process was once again independent coding followed by consensus-building conversations between Aurelia and I. All disputes were resolved through conversation.
-                            </p>
-
-                            <p>
-                                The final portion of qualitative analysis focused on interviews with five students from the software design class. Aadarsh conducted and anonymized the Zoom interviews, centered around the integration of ethics in software design. Aurelia, Aadarsh, Jean, and I developed a qualitative codebook once again through multiple rounds of inductive analysis. The four overarching categories were Considerations, Pathways to Reflection, Anticipated Outcomes, and Responsible Practices. Each had further developed subcategories. This codebook went through three rounds of refining. Then Aurelia and I independently qual-coded the five interviews—before once again coming together for the final consensus. A final post-hoc analysis was conducted with Jean and Aadarsh, and synthesized higher-level themes found across the established codes.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Methods End -->
-
-                
-
-                                <!-- Results Start -->
-                <div class="experience" id="experience">
-                    <div class="content-inner">
-                        <div class="content-header">
-                            <h2>Results</h2>
-                        </div>
-                        <div class="results-text" style="color: #222;">
-                            <p>
-                                The largest takeaways from the collected data center around students’ personal effectiveness and attitudes towards marginalized perspectives. The personal effectiveness of students had major growth between pre-class to post-class data collection according to the CritCon Index results.
-                            </p>
-                            <img src="img/IMAGE.png" alt="Personal Effectiveness Graph" class="centered-img" style="max-width: 100%; height: auto;">
-                            <p>
-                                (p value: 6.388 × 10⁻⁵, r effect size: 0.834)
-                            </p>
-
-                            <p>
-                                What is Personal Effectiveness, you may ask? Well, Personal Effectiveness refers to students’ belief that they:
-                            </p>
-                            <ul>
-                                <li>Have a good understanding of ethical & social impacts of software development</li>
-                                <li>Can participate in discussions of ethics & social impacts of CS</li>
-                                <li>Can uphold ethical conduct in software development</li>
-                                <li>Are better informed than their peers</li>
-                                <li>Can effectively voice their own perspectives on ethical issues</li>
-                            </ul>
-
-                            <img src="img/IMAGE2.png" alt="Peer Attention Graph" class="centered-img" style="max-width: 100%; height: auto;">
-                            <p>
-                                (p value: 0.031, r effect size: 0.450)  
-                            </p>
-
-                            <p>
-                                Another key finding from our quantitative data centers around peer attention. Students’ beliefs that their peers would be attentive to ethical discussion saw moderate growth after taking Software Design.
-                            </p>
-
-                            <p>
-                                There were several notable qualitative findings as well. Through looking at the CIDER classwork and qual-coding the given assumptions across assignments, a trend towards greater diversity in assumptions becomes apparent over time. The first CIDER classwork shows most assumptions are based upon “Technical Knowledge”; this contrasts with each team’s final assignment where there is a larger diversity in assumptions such as “Situational Knowledge”, “Motor”, “Vision”, etc.
-                            </p>
-
-                            <img src="img/IMAGE3.png" alt="CIDER Early Assumptions" class="centered-img" style="max-width: 100%; height: auto;">
-                            <img src="img/IMAGE4.png" alt="CIDER Final Assumptions" class="centered-img" style="max-width: 100%; height: auto;">
-
-                            <p>
-                                This increase in diversity of assumption implies that students incorporated larger considerations towards how their design interacts with all users.
-                            </p>
-
-                            <p>
-                                Not only was there a noticeable increase in student reflection, but there was also a noticeable amount of student agency related to implementing improvements.
-                            </p>
-
-                            <img src="img/IMAGE5.png" alt="Student Implementation Graph" class="centered-img" style="max-width: 100%; height: auto;">
-
-                            <p>
-                                The most common project fixes were related to Accessibility to People (Abilities). All seven groups implemented changes in this category to make their program more accessible to all people. One example being an implemented “colorblind mode” that made the website more accessible to people with visual impairments. (The second screenshot shows colorblind mode enabled)
-                            </p>
-
-                            <img src="img/IMAGE6.png" alt="Colorblind Mode Example" class="centered-img" style="max-width: 100%; height: auto;">
-                            <img src="img/IMAGE7.png" alt="Accessibility Implementation Example" class="centered-img" style="max-width: 100%; height: auto;">
-
-                            <p>
-                                It was interesting to find that most implemented improvements were related to things such as colorblind modes and screen reading. This is likely because those features were directly taught in the class to students.
-                            </p>
-
-                            <p>
-                                Interviews unlocked further understanding of why critical pedagogy in Software Design may shape students’ critical reflection and agency — specifically including marginalized perspectives: from ideals to practice.
-                            </p>
-
-                            <p>
-                                From interviews, we learned students evolved from having a broad understanding of the importance of marginalized perspectives to developing more concrete strategies for inclusive design. All five students spoke of considering impacts on individuals and recognized people experience technology differently based on identity factors such as gender, race, and ability. All five students spoke of inclusion as a value in their work. Overall, the course helped students internalize inclusive and ethical design practices, driven by critical reflection and tools like CIDER.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Results End -->
+        </div>
+    </div>
+    <!-- Home Page End -->
 
 
-                <!-- Home Page Start-->
-                <div class="experience" id="experience">
-                    <div class="content-inner">
-                        <div class="content-header">
-                            <h2><a class="portfolio-title" style="color: #5ac6ea" href="https://aidenjohnson728.github.io" >Back to Home Page</h2> 
-                        </div>
-                    </div>
-                </div>
-                <!-- Home Page End -->
-                
-
-        
-        <!-- Back to Top -->
-        <a href="#" class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
-        
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/slick/slick.min.js"></script>
-        <script src="lib/typed/typed.min.js"></script>
-        <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/isotope/isotope.pkgd.min.js"></script>
-        <script src="lib/lightbox/js/lightbox.min.js"></script>
-        
-        <!-- Template Javascript -->
-        <script src="js/main.js"></script>
-    </body>
+    <!-- Lightbox Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+</body>
 </html>
