@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Centered ArcGIS Map</title>
+
+  <!-- Load ArcGIS embeddable component -->
+  <script type="module" src="https://js.arcgis.com/5.0/embeddable-components/"></script>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;   /* horizontal centering */
+      align-items: center;       /* vertical centering */
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <arcgis-embedded-map
+    style="height:700px; width:1500px;"
+    item-id="f09ca2c5ae5142308167df44aa922742"
+    theme="light"
+    time-zone-label-enabled
+    center="-93.15358701703884,44.4609213682411"
+    scale="4513.988705"
+    portal-url="https://carleton.maps.arcgis.com">
+  </arcgis-embedded-map>
+
+</body>
+</html>
