@@ -1,83 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
-<title>Digital Exhibit Map</title>
+<title>Carleton Digital Exhibit Map</title>
 
-<!-- ArcGIS embeddable component -->
-<script type="module" src="https://js.arcgis.com/5.0/embeddable-components/"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<style>
+
+body{
+    margin:0;
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    background:#f7f7f7;
+}
+
+header{
+    text-align:center;
+    padding:20px;
+    background:#222;
+    color:white;
+    font-size:28px;
+    letter-spacing:1px;
+}
+
+#map{
+    height:90vh;
+    width:100%;
+}
+
+.building-marker{
+    width:22px;
+    height:22px;
+    background:#cc0000;
+    border-radius:50%;
+    border:3px solid white;
+    box-shadow:0 0 12px rgba(255,0,0,.8);
+    transition:transform .15s ease;
+}
+
+.building-marker:hover{
+    transform:scale(1.4);
+}
+
+</style>
 
 </head>
 
 <body>
 
-<div class="wrapper">
+<header>
+Carleton Digital Exhibit Map - Click on any point to learn more information!
+</header>
 
-    <!-- Main Content -->
-    <div class="content">
+<div id="map"></div>
 
-        <div class="content-header" style="text-align: center;">
-            <h2>Carleton's Digital Exhibit Map</h2>
-        </div>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-        <div class="about" style="text-align: center;">
-
-            <p>
-            Click a location on the map to learn more about that site!
-            Each point opens a page with additional historical material,
-            images, and archival sources.
-            </p>
-
-            <div style="display:flex; justify-content:center;">
-
-                <arcgis-embedded-map
-                    id="exhibitMap"
-                    style="height:600px; width:1500px;"
-                    item-id="f09ca2c5ae5142308167df44aa922742"
-                    theme="light"
-                    time-zone-label-enabled
-                    center="-93.15358701703884,44.4609213682411"
-                    scale="4513.988705"
-                    portal-url="https://carleton.maps.arcgis.com">
-                </arcgis-embedded-map>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-<iframe src="https://storymaps.arcgis.com/stories/97c464c5dcf6462f8452585e5df8fe89" width="100%" height="500px" frameborder="0" allowfullscreen allow="geolocation"></iframe>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
 
-  const mapElement = document.getElementById("exhibitMap");
+/* ---------- MAP SETUP ---------- */
 
-  mapElement.addEventListener("arcgisViewClick", (event) => {
+const map = L.map('map').setView([44.4609,-93.1536],16);
 
-    const view = mapElement.view;
 
-    view.hitTest(event.detail).then((response) => {
+/* ---------- MAP STYLES ---------- */
+const satellite = L.tileLayer(
+'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+{
+    attribution:'Tiles © Esri'
+});
 
-      if (response.results.length > 0) {
+const street = L.tileLayer(
+'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+{
+    attribution:'© OpenStreetMap'
+});
 
-        const feature = response.results[0].graphic;
+const minimal = L.tileLayer(
+'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+{
+    attribution:'© OpenStreetMap © CARTO'
+});
 
-        if (feature && feature.attributes && feature.attributes.link) {
 
-          const link = feature.attributes.link;
 
-          window.location.href = link;
+/* default map */
 
-        }
+satellite.addTo(map);
 
-      }
 
+/* ---------- LAYER TOGGLE ---------- */
+
+const baseMaps = {
+  "Satellite": satellite,  
+  "Minimal Map": minimal,
+    "Street Map": street,
+};
+
+L.control.layers(baseMaps).addTo(map);
+
+
+/* ---------- MARKER FUNCTION ---------- */
+
+function buildingMarker(coords,name,link){
+
+    const icon = L.divIcon({
+        className:"",
+        html:`<div class="building-marker"></div>`,
+        iconSize:[22,22],
+        iconAnchor:[11,11]
     });
 
-  });
+    const marker = L.marker(coords,{icon}).addTo(map);
 
-});
+    marker.bindTooltip(name,{direction:"top",offset:[0,-10]});
+
+    marker.on("click",()=>{
+        window.location.href = link;
+    });
+}
+
+
+/* ---------- BUILDINGS ---------- */
+
+buildingMarker(
+[44.460262939525215, -93.15473482867172],
+"Skinner Memorial Chapel",
+"chapel.html"
+);
+
+buildingMarker(
+[44.46185860255292, -93.152498539017],
+"Goodsell Observatory",
+"goodsell.html"
+);
+
+buildingMarker(
+[44.46170188760823, -93.15247701351274],
+"Olin Hall",
+"olin.html"
+);
+
+buildingMarker(
+[44.459367438472945, -93.15030219191526],
+"Watson Hall",
+"watson.html"
+);
+
+buildingMarker(
+[44.4613330197778, -93.1560663187699],
+"Sayles-Hill Campus Center",
+"sayles.html"
+);
+
+buildingMarker(
+[44.46290987965156, -93.15677672324976],
+"West Gym",
+"west-gym.html"
+);
+
+buildingMarker(
+[44.46248347367986, -93.15282684776545],
+"Boliou Hall",
+"boliou.html"
+);
+
 </script>
 
 </body>
