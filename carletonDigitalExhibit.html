@@ -1,35 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Centered ArcGIS Map</title>
+<meta charset="UTF-8">
+<title>Digital Exhibit Map</title>
 
-  <!-- Load ArcGIS embeddable component -->
-  <script type="module" src="https://js.arcgis.com/5.0/embeddable-components/"></script>
+<!-- ArcGIS embeddable component -->
+<script type="module" src="https://js.arcgis.com/5.0/embeddable-components/"></script>
 
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;   /* horizontal centering */
-      align-items: center;       /* vertical centering */
-      background-color: #f5f5f5;
-    }
-  </style>
 </head>
 
 <body>
 
-  <arcgis-embedded-map
-    style="height:700px; width:1500px;"
-    item-id="f09ca2c5ae5142308167df44aa922742"
-    theme="light"
-    time-zone-label-enabled
-    center="-93.15358701703884,44.4609213682411"
-    scale="4513.988705"
-    portal-url="https://carleton.maps.arcgis.com">
-  </arcgis-embedded-map>
+<div class="wrapper">
+
+    <!-- Main Content -->
+    <div class="content">
+
+        <div class="content-header" style="text-align: center;">
+            <h2>Carleton's Digital Exhibit Map</h2>
+        </div>
+
+        <div class="about" style="text-align: center;">
+
+            <p>
+            Click a location on the map to learn more about that site!
+            Each point opens a page with additional historical material,
+            images, and archival sources.
+            </p>
+
+            <div style="display:flex; justify-content:center;">
+
+                <arcgis-embedded-map
+                    id="exhibitMap"
+                    style="height:600px; width:1500px;"
+                    item-id="f09ca2c5ae5142308167df44aa922742"
+                    theme="light"
+                    time-zone-label-enabled
+                    center="-93.15358701703884,44.4609213682411"
+                    scale="4513.988705"
+                    portal-url="https://carleton.maps.arcgis.com">
+                </arcgis-embedded-map>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<iframe src="https://storymaps.arcgis.com/stories/97c464c5dcf6462f8452585e5df8fe89" width="100%" height="500px" frameborder="0" allowfullscreen allow="geolocation"></iframe>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const mapElement = document.getElementById("exhibitMap");
+
+  mapElement.addEventListener("arcgisViewClick", (event) => {
+
+    const view = mapElement.view;
+
+    view.hitTest(event.detail).then((response) => {
+
+      if (response.results.length > 0) {
+
+        const feature = response.results[0].graphic;
+
+        if (feature && feature.attributes && feature.attributes.link) {
+
+          const link = feature.attributes.link;
+
+          window.location.href = link;
+
+        }
+
+      }
+
+    });
+
+  });
+
+});
+</script>
 
 </body>
 </html>
