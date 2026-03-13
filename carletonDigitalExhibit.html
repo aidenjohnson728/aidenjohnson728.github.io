@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Carleton Digital Exhibit Map</title>
+<title>Carleton Digital Architectural Exhibit</title>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
@@ -11,36 +11,78 @@
 
 body{
     margin:0;
-    font-family:"Helvetica Neue",Arial,sans-serif;
-    background:#f7f7f7;
+    font-family:"Helvetica Neue", Arial, sans-serif;
+    line-height:1.6;
+    color:#333;
 }
 
+/* HEADER */
+
 header{
-    text-align:center;
-    padding:20px;
     background:#222;
     color:white;
-    font-size:28px;
+    padding:30px;
+    text-align:center;
+    font-size:32px;
     letter-spacing:1px;
 }
 
+/* INTRO SECTION */
+
+.intro{
+    max-width:900px;
+    margin:auto;
+    padding:60px 40px;
+    font-size:18px;
+}
+
+.intro p{
+    margin-bottom:24px;
+}
+
+/* SCROLL CUE */
+
+.scroll-down{
+    text-align:center;
+    font-size:18px;
+    margin-top:40px;
+    color:#777;
+}
+
+/* MAP */
+
 #map{
-    height:90vh;
+    height:95vh;
     width:100%;
 }
+
+/* MARKERS */
 
 .building-marker{
     width:22px;
     height:22px;
-    background:#cc0000;
+    background:#ff2b2b;
     border-radius:50%;
     border:3px solid white;
-    box-shadow:0 0 12px rgba(255,0,0,.8);
+    box-shadow:0 0 16px rgba(255,0,0,.9);
     transition:transform .15s ease;
 }
 
 .building-marker:hover{
     transform:scale(1.4);
+}
+
+/* FADE-IN ANIMATION */
+
+.fade-in-section{
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity 1s ease, transform 1s ease;
+}
+
+.fade-in-section.visible{
+    opacity:1;
+    transform:translateY(0);
 }
 
 </style>
@@ -50,85 +92,111 @@ header{
 <body>
 
 <header>
-Carleton Digital Exhibit Map - Click on any point to learn more information!
+Carleton Digital Architectural Exhibit
 </header>
 
-<div id="map"></div>
+<section class="intro">
+
+<p>
+The Carleton Digital Exhibit is a project intended to engage the user by letting them choose their own path. Instead of passive scrolling, the user becomes an active participant in the exhibit. Click on specific points on the map to get in depth information of the building’s history and broader architectural context. There may even be a fun fact or two!
+</p>
+
+<p>
+Carleton’s architectural movements can be broken down into several eras, with each era calling to different architectural movements across the progression of Western Civilization. The timeline is roughly: early buildings (mainly influenced by Romanesque motifs), the Cowling Era (directly influenced by Collegiate Gothic), the Modern era (influenced by Modernism), and the New Century Era (a mix of calling back and calling forward a la LDC).
+</p>
+
+<p>
+After World War II, there was a push to create architecture that called forward to the future instead of the past. For this reason, many buildings fall under the Modern style.
+</p>
+
+<p>
+In contemporary Carleton, it is hard to perfectly distinguish what architectural style is most appropriate. It is possible that Carleton’s current architecture calls both back to the past and forward toward postmodernism. My focus for this exhibit is on Early Buildings, the Cowling Era, the Modern era, and a portion of the New Century Era.
+</p>
+
+<p>
+Much of the content for this exhibit is adapted from Lauren Soth’s <em>Architecture at Carleton: A Brief History and Guide</em> (2002). I am incredibly indebted to this resource, as it provided invaluable information for this project. I would also like to thank my professor, Baird Jarman, for giving me so much freedom in shaping this project and helping me focus its scope. This exhibit would not have been possible without his guidance.
+</p>
+
+<div class="scroll-down">
+  Scroll to explore the map. Click on the points to learn more!
+</div>
+
+</section>
+
+<div id="map-section">
+  <div id="map" class="fade-in-section"></div>
+</div>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 <script>
 
-/* ---------- MAP SETUP ---------- */
+/* MAP SETUP */
 
 const map = L.map('map').setView([44.4609,-93.1536],16);
 
 
-/* ---------- MAP STYLES ---------- */
-const satellite = L.tileLayer(
-'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-{
-    attribution:'Tiles © Esri'
-});
+/* MAP STYLES */
 
 const street = L.tileLayer(
-'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-{
-    attribution:'© OpenStreetMap'
-});
+'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+);
 
 const minimal = L.tileLayer(
-'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-{
-    attribution:'© OpenStreetMap © CARTO'
-});
+'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+);
+
+const satellite = L.tileLayer(
+'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+);
 
 
 
-/* default map */
+/* DEFAULT MAP */
 
-satellite.addTo(map);
+minimal.addTo(map);
 
 
-/* ---------- LAYER TOGGLE ---------- */
+/* MAP STYLE TOGGLE */
 
 const baseMaps = {
-  "Satellite": satellite,  
-  "Minimal Map": minimal,
-    "Street Map": street,
+"Minimal Map": minimal,
+"Satellite": satellite,
+"Street Map": street,
 };
 
 L.control.layers(baseMaps).addTo(map);
 
 
-/* ---------- MARKER FUNCTION ---------- */
+/* MARKER FUNCTION */
 
 function buildingMarker(coords,name,link){
 
-    const icon = L.divIcon({
-        className:"",
-        html:`<div class="building-marker"></div>`,
-        iconSize:[22,22],
-        iconAnchor:[11,11]
-    });
+const icon = L.divIcon({
+className:"",
+html:`<div class="building-marker"></div>`,
+iconSize:[22,22],
+iconAnchor:[11,11]
+});
 
-    const marker = L.marker(coords,{icon}).addTo(map);
+const marker = L.marker(coords,{icon}).addTo(map);
 
-    marker.bindTooltip(name,{direction:"top",offset:[0,-10]});
+marker.bindTooltip(name,{direction:"top",offset:[0,-10]});
 
-    marker.on("click",()=>{
-        window.location.href = link;
-    });
+marker.on("click",()=>{
+window.location.href = link;
+});
+
 }
 
 
-/* ---------- BUILDINGS ---------- */
-
+/* BUILDINGS */
 buildingMarker(
 [44.460262939525215, -93.15473482867172],
 "Skinner Memorial Chapel",
 "chapel.html"
 );
+
 
 buildingMarker(
 [44.46185860255292, -93.152498539017],
@@ -136,11 +204,13 @@ buildingMarker(
 "goodsell.html"
 );
 
+
 buildingMarker(
 [44.46170188760823, -93.15247701351274],
 "Olin Hall",
 "olin.html"
 );
+
 
 buildingMarker(
 [44.459367438472945, -93.15030219191526],
@@ -148,11 +218,13 @@ buildingMarker(
 "watson.html"
 );
 
+
 buildingMarker(
 [44.4613330197778, -93.1560663187699],
 "Sayles-Hill Campus Center",
 "sayles.html"
 );
+
 
 buildingMarker(
 [44.46290987965156, -93.15677672324976],
@@ -160,11 +232,28 @@ buildingMarker(
 "west-gym.html"
 );
 
+
 buildingMarker(
 [44.46248347367986, -93.15282684776545],
 "Boliou Hall",
 "boliou.html"
 );
+
+
+
+/* FADE-IN OBSERVER */
+
+const observer = new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("visible");
+}
+});
+});
+
+document.querySelectorAll(".fade-in-section").forEach(section=>{
+observer.observe(section);
+});
 
 </script>
 
