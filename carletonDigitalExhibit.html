@@ -154,14 +154,14 @@ const satellite = L.tileLayer(
 
 /* DEFAULT MAP */
 
-minimal.addTo(map);
+satellite.addTo(map);
 
 
 /* MAP STYLE TOGGLE */
 
 const baseMaps = {
+  "Satellite": satellite,
 "Minimal Map": minimal,
-"Satellite": satellite,
 "Street Map": street,
 };
 
