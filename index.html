@@ -1,433 +1,474 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Aiden Johnson</title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="Resume Website Template Free Download" name="keywords">
-        <meta content="Resume Website Template Free Download" name="description">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aiden Johnson</title>
+<meta name="description" content="Aiden Johnson">
 
-        <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Syne:wght@500..800&display=swap" rel="stylesheet">
 
-        <!-- CSS Libraries -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-        <link href="lib/slick/slick.css" rel="stylesheet">
-        <link href="lib/slick/slick-theme.css" rel="stylesheet">
-        <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+</head>
 
-        <!-- Template Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
-    </head>
+<body>
 
-    <body data-spy="scroll" data-target=".navbar" data-offset="51">
-        <div class="wrapper">
-            <div class="sidebar">
-                <div class="sidebar-content">
-                    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-                        <a href="#" class="navbar-brand">Navigation</a>
-                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarCollapse">
-                            <ul class="nav navbar-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#header">Home<i class="fa fa-home"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#about">About<i class="fa fa-address-card"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#portfolio">Portfolio<i class="fa fa-star"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#education">Education<i class="fa fa-book"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#experience">Experience<i class="fa fa-file-archive"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#contact">Contact<i class="fa fa-envelope"></i></a>
-                                </li>
-                                <!-- <li class="nav-item">
-                                    <a class="nav-link" href="swim">Swim Profile</a><i class="water"></i></a>
-                                </li> -->
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#merch">Merch<i class="fa fa-shopping-bag"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-            <div class="content">
-                <!-- Header Start -->
-                <div class="header" id="header">
-                    <div class="content-inner">
+<!-- ============ STAR SHAPE + CRAYON FILTER (defined once) ============ -->
+<svg class="star-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="crayon" x="-30%" y="-30%" width="160%" height="160%">
+      <!-- wobble the line so it isn't ruler-straight -->
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="9" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="7"
+                         xChannelSelector="R" yChannelSelector="G" result="wobbly"/>
+      <!-- speckle the fill so it reads as wax on paper -->
+      <feTurbulence type="fractalNoise" baseFrequency="0.62" numOctaves="4" seed="4" result="grain"/>
+      <feColorMatrix in="grain" type="luminanceToAlpha" result="grainAlpha"/>
+      <feComponentTransfer in="grainAlpha" result="grainLift">
+        <feFuncA type="gamma" exponent="0.35"/>
+      </feComponentTransfer>
+      <feComposite in="wobbly" in2="grainLift" operator="in"/>
+    </filter>
 
-                        <h1>Aiden Johnson</h1>
-                        <h2></h2>
-                        <div class="typed-text" style="color: #222">Click below for my resume!</div><i class="fa fa-star"></i>
-                    </div>
-                </div>
-                <!-- Header End -->
-                
-                <!-- Large Button Start -->
-                <div class="large-btn">
-                    <div class="content-inner">
-                        <a class="btn" href="AidenResume.pdf" target="_blank"><i class="fa fa-download"></i>Resume</a>
-                    </div>
-                </div>
-                <!-- Large Button End -->
-                
-                <!-- About Start -->
-                <div class="about" id="about">
-                    <div class="content-inner">
-                        <div class="content-header">
-                            <h2>About Me</h2>
-                        </div>
-                        <div class="row align-items-center">
-                            <div class="col-md-6 col-lg-5">
-                                <img src="img/AidenHeadshot.jpg" alt="Image">
-                            </div>
-                            <div class="col-md-6 col-lg-7">
-                                <p style="color: #222">
-                                    Hello! My name is Aiden Johnson, and I am a junior at Carleton College. I enjoy combining Computer Science and Studio Art to explore the intersection of technology and creativity.
-                                </p>
-                                <p style="color: #222"></pstyle>
-                                    My academic work often crosses into Digital Arts and Humanities, Data Science, and Art History, where I enjoy connecting quantitative work with creative application. I hope to continue educating myself across multiple different disciplines here at Carleton, with the hope to apply them in the professional world. 
-                                </p>
-                                <p style="color: #222"></pstyle>
-                                    When I’m not in the studio or coding, you’ll find me in the pool competing with the Carleton Men’s Varsity Swim and Dive Team, or creating original designs at Haus of Frog, my merchandising company. Feel free to check my stuff out below!
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- About End -->
+    <!-- one continuous five-point line, the way you draw a star without lifting up -->
+    <symbol id="star-shape" viewBox="0 0 100 100">
+      <path d="M50 7 L77.3 86.8 L7.2 37.2 L92.8 36.4 L23.1 87.4 Z"
+            fill="none" stroke="currentColor" stroke-width="8"
+            stroke-linejoin="round" stroke-linecap="round"
+            filter="url(#crayon)"/>
+    </symbol>
+  </defs>
+</svg>
 
-                  <!-- Portfolio Start -->
-                <div class="portfolio" id="portfolio">
-                    <div class="content-inner">
-                        <div class="content-header">
-                            <h2>Portfolio</h2>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <ul id="portfolio-flters">
-                                    <li data-filter="*" class="filter-active">All</li>
-                                    <li data-filter=".web-pro">Projects</li>
-                                    <li data-filter=".web-res">Research</li>
-                                    <li data-filter=".art">Artwork</li>
-                                    <li data-filter=".haus">Haus of Frog</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="row portfolio-container">
+<div class="stars" aria-hidden="true">
+  <svg class="star star--brown s1" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--white s2" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--green s3" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--brown s4" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--white s5" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--green s6" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--white s7" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--brown s8" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--green s9" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--white s10" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--brown s11" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--green s12" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--white s13" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--brown s14" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--green s15" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--white s16" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--brown s17" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--green s18" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--white s19" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--brown s20" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--blue s21" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--blue s22" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--blue s23" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--blue s24" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+</div>
 
-                            <div class="col-lg-4 col-md-6 portfolio-item web-res">
-                                <div class="portfolio-wrap">
-                                    <figure>
-                                        <a href="https://aidenjohnson728.github.io/research.html" target="_blank">
-                                            <img src="img/IMAGE5.png"  style="max-width: 100%; height: auto;" class="img-fluid" alt=""></a>
-                                        <a class="portfolio-title" href="https://aidenjohnson728.github.io/research.html" target="_blank">Integrating Critical Pedagogy into Undergraduate Software Design</a>
-                                    </figure>
-                                </div>
-                            </div>
+<a class="skip-link" href="#main">Skip to content</a>
 
-                            <!-- USE THIS FORMAT TO INSERT LINKS AND STUFF FOR PORTFOLIO! -->
-                            <div class="col-lg-4 col-md-6 portfolio-item web-pro">
-                                <div class="portfolio-wrap">
-                                    <figure>
-                                        <a href="https://frisbeestats.com" target="_blank">
-                                            <img src="img/frisbeestats.png" style="max-width: 100%; height: auto;" class="img-fluid" alt=""></a>
-                                        <a class="portfolio-title" href="https://frisbeestats.com" target="_blank">Frisbee Stats!</a>
-                                    </figure>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 portfolio-item web-pro">
-                                <div class="portfolio-wrap">
-                                    <figure>
-                                        <a href="https://theaidenjohnson.com/carletonDigitalExhibit" target="_blank">
-                                            <img src="img/digitalExhibit.png" style="max-width: 100%; height: auto;" class="img-fluid" alt=""></a>
-                                        <a class="portfolio-title" href="https://theaidenjohnson.com/carletonDigitalExhibit" target="_blank">Carleton Digital Exhibit</a>
-                                    </figure>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 portfolio-item haus">
-                                <div class="portfolio-wrap">
-                                    <figure>
-                                        <a href="https://hausoffrog.com" target="_blank">
-                                            <img src="img/hausoffrog.png" style="max-width: 100%; height: auto;" class="img-fluid" alt=""></a>
-                                        <a class="portfolio-title" href="https://hausoffrog.com" target="_blank">Haus of Frog Merchandising Company</a>
-                                    </figure>
-                                </div>
-                            </div>
+<!-- ============ SIDEBAR ============ -->
+<button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="sidebar">
+  <span class="nav-toggle-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+  <span class="nav-toggle-label">Menu</span>
+</button>
 
-                            <div class="col-lg-4 col-md-6 portfolio-item art">
-                                <div class="portfolio-wrap">
-                                    <figure>
-                                        <a href="Cowprint Work.pdf" target="_blank">
-                                            <img src="img/cowprint.png" style="max-width: 100%; height: auto;" class="img-fluid" alt=""></a>
-                                        <a class="portfolio-title" href="Cowprint Work.pdf" target="_blank">Selected Cowprint Work 2024-2025</a>
-                                    </figure>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 portfolio-item art">
-                                <div class="portfolio-wrap">
-                                    <figure>
-                                        <a href="https://aidenjohnson728.github.io/studioArtPortfolio.html" target="_blank">
-                                            <img src="img/StudioArtPortfolio.png" style="max-width: 100%; height: 100%;" class="img-fluid" alt=""></a>
-                                        <a class="portfolio-title" href="https://aidenjohnson728.github.io/studioArtPortfolio.html" target="_blank">Selected Studio Art Portfolio</a>
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<nav class="sidebar" id="sidebar" aria-label="Section navigation">
+  <div class="sidebar-mark">
+    <span class="sidebar-name">Aiden Johnson</span>
+  </div>
 
-                
-                <!-- Education Start -->
-                <div class="education" id="education">
-                    <div class="content-inner">
-                        <div class="content-header">
-                            <h2>Education</h2>
-                        </div>
-                        <div class="row align-items-center">
-                            <div class="col-md-6">
-                                <div class="edu-col">
-                                    <span>September-2019 <i>to</i> June-2023</span>
-                                    <h3>Mayo Senior High School</h3>
-                                    <p>I attended Mayo High School, graduating with an Honors Diploma.</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="edu-col">
-                                    <span>September-2023 <i>to</i> June-2027</span>
-                                    <h3>Carleton College</h3>
-                                    <p>Computer Science and Studio Art major. Student Athlete. All district Athletic Award Honoree. Dean's List awardee.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Education Start -->
-                
-                <!-- Experience Start -->
-                <div class="experience" id="experience">
-                    <div class="content-inner">
-                        <div class="content-header">
-                            <h2>Experience</h2>
-                        </div>
-                        <div class="row align-items-center">
-                            <div class="col-md-6">
-                                <div class="exp-col">
-                                    <span>June-2020 <i>to</i> present</span>
-                                    <h3 style="color: #222">CEO and Creative Director</h3>
-                                    <h5>Haus of Frog</h5>
-                                    <p>
-                                        <ul style="color:#222">
-                                            <li> Marketed products through social media platforms to engage consumers with eye-catching graphics </li>
-                                            <li>Employed graphic design skills using Procreate and Canva digital art software</li>
-                                        </ul>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="exp-col">
-                                    <span>April 2022 <i>to</i> September 2024</span>
-                                    <h3 style="color: #222">Lifeguard</h3>
-                                    <h4> Rochester, Minnesota</h4>
-                                    <h5>Rochester Athletic Club</h5>
-                                    <p>
-                                        <ul style="color:#222">
-                                        <li>Certified in both American Red Cross plus StarGuard life saving training to ensure safety of all patrons </li>      
-                                        </ul>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="exp-col">
-                                    <span>August 2023 <i>to</i> present </span>
-                                    <h3 style="color: #222">PEAR Lifeguard and Teaching Assistant</h3>
-                                    <h4> Northfield, Minnesota</h4>
-                                    <h5>Carleton College</h5>
-                                    <p>
-                                        <ul style="color:#222">
-                                            <li>
-                                                Balanced lifeguard duties with athletics and academics
-                                            </li>
-                                            <li>
-                                                Effectively communicated and instructed students under the direction of Brooke Plotz for the Swimming Fitness class
-                                            </li>
-                                        </ul>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="exp-col">
-                                    <span>June 2024 <i>to</i> July 2024 </span>
-                                    <h3 style="color: #222">Program and Community Assistant</h3>
-                                    <h4> Northfield, Minnesota</h4>
-                                    <h5>Carleton College</h5>
-                                    <p>
-                                        <ul style="color:#222">
-                                            <li>
-                                                Organized and marketed large scale events for Carleton College’s Summer Liberal Arts Institute (SLAI) 
-                                            </li>
-                                            <li>
-                                                Developed management and leadership skills by independently supervising 18 Pre-College Students on my residence floor
-                                            </li>
-                                            <li>
-                                                Utilized Microsoft Office software tools to organize and streamline student information and programming
-                                            </li>
-                                        </ul>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="exp-col">
-                                    <span>March 2025 <i>to</i> August 2025 </span>
-                                    <h3 style="color: #222">Student Researcher</h3>
-                                    <h4> Northfield, Minnesota</h4>
-                                    <h5>Carleton College</h5>
-                                    <p>
-                                        <ul style="color:#222">
-                                            <li>
-                                                Conducted A/B testing to evaluate the outcomes of a software design educational intervention using non-parametric statistical techniques
-                                            </li>
-                                            <li>
-                                                Applied human factors and program analysis techniques to understand the processes underlying a software design educational intervention
-                                            </li>
-                                            <li>
-                                                Visualized our findings using pandas, matplotlib and pywaffle
-                                            </li>
-                                            <li>
-                                                Contributed to in-submission research publications
-                                            </li>
-                                            <li>
-                                                Designed a website and other visual mediums to communicate findings
-                                            </li>
-                                        </ul>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="exp-col">
-                                    <span>September 2025 <i>to</i> present </span>
-                                    <h3 style="color: #222">Digital Humanities Associate</h3>
-                                    <h4> Northfield, Minnesota</h4>
-                                    <h5>Carleton College</h5>
-                                    <p>
-                                        <ul style="color:#222">
-                                            <li>
-                                                Integrated digital tools and methods into humanities education  
-                                            </li>
-                                            <li>
-                                                Collaborated with other institutions on digital humanities projects
-                                            </li>
-                                            <li>
-                                                Developed personal skills in digital humanities through collaboration and project work
-                                            </li>
-                                        </ul>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Experience Start -->
-                
-                
-                <!-- Contact Start -->
-                <div class="contact" id="contact">
-                    <div class="content-inner">
-                        <div class="content-header">
-                            <h2>Contact</h2>
-                        </div>
-                        <div class="row align-items-center">
-                            <div class="col-md-6">
-                                <div class="contact-info">
-                                    <p><i class="fa fa-user"></i>Aiden Johnson</p>
-                                    <p><i class="fa fa-tag"></i>Student-Athlete at Carleton College</p>
-                                    <p><i class="fa fa-envelope"></i><a href="mailto:aidenjohnson728@gmail.com">aidenjohnson728@gmail.com</a></p>
-                                    <p><i class="fa fa-phone"></i><a href="tel:+15073981334">+1-507-398-1334</a></p>
-                                    <p><i class="fa fa-map-marker"></i>Rochester, MN</p>
-                                    <div class="social">
-                                        <a class="btn" href="https://www.linkedin.com/in/aiden-johnson-9a912a279/"><i class="fab fa-linkedin-in"></i></a>
-                                        <a class="btn" href="https://www.instagram.com/haus.of.frog/"><i class="fab fa-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <ul class="nav-list">
+    <li><a class="nav-link" href="#home"><span class="nav-text">Aiden</span><svg class="scribble" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M108 12C100 3 60 1 32 5 8 9 2 20 8 27c7 8 52 12 80 8 22-3 30-11 22-21-6-7-36-11-64-9"/></svg></a></li>
+    <li><a class="nav-link" href="#about"><span class="nav-text">About</span><svg class="scribble" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M108 12C100 3 60 1 32 5 8 9 2 20 8 27c7 8 52 12 80 8 22-3 30-11 22-21-6-7-36-11-64-9"/></svg></a></li>
+    <li><a class="nav-link" href="#portfolio"><span class="nav-text">Portfolio</span><svg class="scribble" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M108 12C100 3 60 1 32 5 8 9 2 20 8 27c7 8 52 12 80 8 22-3 30-11 22-21-6-7-36-11-64-9"/></svg></a></li>
+    <li><a class="nav-link" href="#experience"><span class="nav-text">Experience</span><svg class="scribble" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M108 12C100 3 60 1 32 5 8 9 2 20 8 27c7 8 52 12 80 8 22-3 30-11 22-21-6-7-36-11-64-9"/></svg></a></li>
+    <li><a class="nav-link" href="#merch"><span class="nav-text">Merch</span><svg class="scribble" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M108 12C100 3 60 1 32 5 8 9 2 20 8 27c7 8 52 12 80 8 22-3 30-11 22-21-6-7-36-11-64-9"/></svg></a></li>
+    <li><a class="nav-link" href="#education"><span class="nav-text">Education</span><svg class="scribble" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M108 12C100 3 60 1 32 5 8 9 2 20 8 27c7 8 52 12 80 8 22-3 30-11 22-21-6-7-36-11-64-9"/></svg></a></li>
+    <li><a class="nav-link" href="#contact"><span class="nav-text">Contact</span><svg class="scribble" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M108 12C100 3 60 1 32 5 8 9 2 20 8 27c7 8 52 12 80 8 22-3 30-11 22-21-6-7-36-11-64-9"/></svg></a></li>
+  </ul>
 
-                
-                 <!-- <div class="swim" id="swim">
-                    <div class="content-inner">
-                        <div class="content-header">
-                            <h2><br>My Swim Profile</h2>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="col-lg-10">
-                                <div style="background: #ffffff; padding: 30px; border-radius: 20px;">
-                                    <iframe id="preview-frame" src="https://www.swimcloud.com/swimmer/664507/iframe/?splashes_type=best" width="100%" height="500px" frameborder="0"></iframe>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-                 </div> -->
-                 
-                                 <!-- Merch Start -->
-                <div class="merch" id="merch">
-                    <div class="content-inner">
-                        <div class="content-header">
-                            <h2><br> Haus of Frog</h2>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="col-lg-10">
-                                <div style="background: #ffffff; padding: 30px; border-radius: 20px;">
-                                    <iframe 
-                                        style="border-radius:24px; border:none;" 
-                                        src="https://embed.creator-spring.com/widget?slug=my-store-11555447&per=28&currency=&page=1&layout=carousel-wide&theme=light" 
-                                        title="Haus of Frog" 
-                                        width="100%" 
-                                        height="420"
-                                    ></iframe>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Merch End -->
+  <a class="sidebar-resume" href="AidenResume.pdf" target="_blank" rel="noopener">Resume</a>
+</nav>
 
-                
-                
-        
-        <!-- Back to Top -->
-        <a href="#" class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
+<main class="page" id="main">
 
-         <!--  Spring Pop-Up Shop Button -->
-        <script src="https://cdn-spring.com/embed/pop-up-shop-button.js"></script>
-        <pop-up-shop-button store-name="hausoffrog" title="Shop Haus of Frog" button-color="#000000" text-color="#ffffff"></pop-up-shop-button>
+  <!-- ============ HOME ============ -->
+  <header class="hero" id="home">
+    <h1 class="hero-name">Aiden Johnson</h1>
+    <p class="hero-line"><span class="hero-mark">Click below for my resume!</span></p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="AidenResume.pdf" target="_blank" rel="noopener">Resume</a>
+      <a class="btn" href="#portfolio">Portfolio</a>
+    </div>
+  </header>
 
-        
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/slick/slick.min.js"></script>
-        <script src="lib/typed/typed.min.js"></script>
-        <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/isotope/isotope.pkgd.min.js"></script>
-        <script src="lib/lightbox/js/lightbox.min.js"></script>
-        
-        <!-- Template Javascript -->
-        <script src="js/main.js"></script>
-    </body>
+ <!-- ============ ABOUT ============ -->
+
+<section class="section" id="about">
+    <div class="panel">
+      <h2 class="section-title"><span>About Me</span></h2>
+  
+  <div class="about-grid">
+    <figure class="photo-card">
+      <img src="img/AidenHeadshot.jpg" alt="Aiden Johnson" loading="lazy">
+    </figure>
+  
+    <div class="about-text">
+      <p>
+        Hello! I&rsquo;m Aiden Johnson, a senior at Carleton College studying Computer Science, Digital Arts and Humanities, Statistics, and Art History.
+        My work sits at the intersection of <strong>human-computer interaction,
+        UX research, and creative technology</strong>, with a focus on making complex technology
+        more intuitive, accessible, and human-centered.
+      </p>
+  
+      <p>
+        Through research, internships, and independent projects, I&rsquo;ve designed interactive
+        tools, conducted user-centered research, and developed AI-assisted technologies.
+       At the Mayo Clinic&rsquo;s Knowledge and Evaluation Research Unit,
+        I developed a privacy-conscious research application, AI tools for analyzing clinical
+        conversations, and user-centered interfaces for researchers and clinicians.
+      </p>
+  
+      <p>
+        I&rsquo;m particularly interested in where <strong>UX research, interaction design, and
+        AI</strong> meet. My portfolio reflects that multidisciplinary approach through research,
+        data visualization, web development, Figma prototyping, digital humanities, and creative
+        design. Outside of this work, I&rsquo;m a Captain of the Carleton Men&rsquo;s Varsity Swim
+        and Dive Team and the founder and Creative Director of Haus of Frog. If you like what you see, hit me up.
+        I am always looking for new problems to solve!
+      </p>
+    </div>
+  </div>
+  
+    </div>
+  </section>  
+  
+
+  <!-- ============ PORTFOLIO ============ -->
+  <section class="section" id="portfolio">
+    <h2 class="section-title"><span>Portfolio</span></h2>
+
+    <div class="filters" role="group" aria-label="Filter portfolio">
+      <button class="filter is-active" data-filter="all">All</button>
+      <button class="filter" data-filter="projects">Projects</button>
+      <button class="filter" data-filter="research">Research</button>
+      <button class="filter" data-filter="art">Artwork</button>
+      <button class="filter" data-filter="haus">Haus of Frog</button>
+    </div>
+
+    <div class="work-grid" id="workGrid">
+
+      <!-- ---------- 1 ---------- -->
+      <article class="work-card" data-cat="research">
+        <button class="card-face" aria-expanded="false" aria-controls="case-1">
+          <span class="card-thumb"><img src="img/IMAGE5.png" alt="" loading="lazy"></span>
+          <span class="card-meta"><span class="tag">Research</span></span>
+          <span class="card-title">Integrating Critical Pedagogy into Undergraduate Software Design</span>
+          <span class="card-hint" aria-hidden="true">Read more</span>
+        </button>
+
+        <div class="case" id="case-1" hidden>
+          <div class="case-cols">
+            <div class="case-block"><h3>The problem</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>My role</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>Methods</h3><p>Placeholder</p></div>
+          </div>
+          <ol class="process">
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+          </ol>
+          <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
+          <a class="stamp" href="https://aidenjohnson728.github.io/research.html" target="_blank" rel="noopener">View the final product</a>
+        </div>
+      </article>
+
+      <!-- ---------- 2 ---------- -->
+      <article class="work-card" data-cat="projects">
+        <button class="card-face" aria-expanded="false" aria-controls="case-2">
+          <span class="card-thumb"><img src="img/frisbeestats.png" alt="" loading="lazy"></span>
+          <span class="card-meta"><span class="tag">Projects</span></span>
+          <span class="card-title">Frisbee Stats!</span>
+          <span class="card-hint" aria-hidden="true">Read more</span>
+        </button>
+
+        <div class="case" id="case-2" hidden>
+          <div class="case-cols">
+            <div class="case-block"><h3>The problem</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>My role</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>Methods</h3><p>Placeholder</p></div>
+          </div>
+          <ol class="process">
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+          </ol>
+          <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
+          <a class="stamp" href="https://frisbeestats.com" target="_blank" rel="noopener">View the final product</a>
+        </div>
+      </article>
+
+      <!-- ---------- 3 ---------- -->
+      <article class="work-card" data-cat="projects">
+        <button class="card-face" aria-expanded="false" aria-controls="case-3">
+          <span class="card-thumb"><img src="img/digitalExhibit.png" alt="" loading="lazy"></span>
+          <span class="card-meta"><span class="tag">Projects</span></span>
+          <span class="card-title">Carleton Digital Exhibit</span>
+          <span class="card-hint" aria-hidden="true">Read more</span>
+        </button>
+
+        <div class="case" id="case-3" hidden>
+          <div class="case-cols">
+            <div class="case-block"><h3>The problem</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>My role</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>Methods</h3><p>Placeholder</p></div>
+          </div>
+          <ol class="process">
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+          </ol>
+          <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
+          <a class="stamp" href="https://theaidenjohnson.com/carletonDigitalExhibit" target="_blank" rel="noopener">View the final product</a>
+        </div>
+      </article>
+
+      <!-- ---------- 4 ---------- -->
+      <article class="work-card" data-cat="haus">
+        <button class="card-face" aria-expanded="false" aria-controls="case-4">
+          <span class="card-thumb"><img src="img/hausoffrog.png" alt="" loading="lazy"></span>
+          <span class="card-meta"><span class="tag">Haus of Frog</span></span>
+          <span class="card-title">Haus of Frog Merchandising Company</span>
+          <span class="card-hint" aria-hidden="true">Read more</span>
+        </button>
+
+        <div class="case" id="case-4" hidden>
+          <div class="case-cols">
+            <div class="case-block"><h3>The problem</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>My role</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>Methods</h3><p>Placeholder</p></div>
+          </div>
+          <ol class="process">
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+          </ol>
+          <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
+          <a class="stamp" href="https://hausoffrog.com" target="_blank" rel="noopener">View the final product</a>
+        </div>
+      </article>
+
+      <!-- ---------- 5 ---------- -->
+      <article class="work-card" data-cat="art">
+        <button class="card-face" aria-expanded="false" aria-controls="case-5">
+          <span class="card-thumb"><img src="img/cowprint.png" alt="" loading="lazy"></span>
+          <span class="card-meta"><span class="tag">Artwork</span></span>
+          <span class="card-title">Selected Cowprint Work 2024-2025</span>
+          <span class="card-hint" aria-hidden="true">Read more</span>
+        </button>
+
+        <div class="case" id="case-5" hidden>
+          <div class="case-cols">
+            <div class="case-block"><h3>The problem</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>My role</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>Methods</h3><p>Placeholder</p></div>
+          </div>
+          <ol class="process">
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+          </ol>
+          <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
+          <a class="stamp" href="Cowprint%20Work.pdf" target="_blank" rel="noopener">View the final product</a>
+        </div>
+      </article>
+
+      <!-- ---------- 6 ---------- -->
+      <article class="work-card" data-cat="art">
+        <button class="card-face" aria-expanded="false" aria-controls="case-6">
+          <span class="card-thumb"><img src="img/StudioArtPortfolio.png" alt="" loading="lazy"></span>
+          <span class="card-meta"><span class="tag">Artwork</span></span>
+          <span class="card-title">Selected Studio Art Portfolio</span>
+          <span class="card-hint" aria-hidden="true">Read more</span>
+        </button>
+
+        <div class="case" id="case-6" hidden>
+          <div class="case-cols">
+            <div class="case-block"><h3>The problem</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>My role</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>Methods</h3><p>Placeholder</p></div>
+          </div>
+          <ol class="process">
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+          </ol>
+          <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
+          <a class="stamp" href="https://aidenjohnson728.github.io/studioArtPortfolio.html" target="_blank" rel="noopener">View the final product</a>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="empty-state" id="emptyState" hidden>Nothing in this category yet.</p>
+  </section>
+
+   <!-- ============ EXPERIENCE ============ -->
+
+<section class="section" id="experience">
+    <div class="panel">
+      <h2 class="section-title"><span>Experience</span></h2>
+  
+  <ol class="timeline">
+  
+    <li class="entry">
+      <p class="entry-date">June 2026 <i>to</i> August 2026</p>
+      <h3 class="entry-role">AI Engineer &amp; UX Design Intern</h3>
+      <p class="entry-org">Mayo Clinic &middot; Knowledge and Evaluation Research Unit &middot; Rochester, Minnesota</p>
+      <ul>
+        <li>Designed and developed a local-first qualitative research application that enables collaborative coding of clinical encounters while keeping protected patient information local</li>
+        <li>Developed AI-assisted speaker diarization tools to automatically identify speakers in clinical recordings, improving the efficiency of qualitative patient-experience research</li>
+        <li>Conducted user-centered design through researcher interviews, UX wireframing, and interactive Figma prototyping to translate clinical research needs into usable software tools</li>
+        <li>Collaborated with clinicians, researchers, and software developers to implement and evaluate research-focused interfaces and workflows</li>
+        <li>Redesigned and maintained the KER Unit&rsquo;s WordPress website and created publication-quality figures and visualizations for medical research</li>
+        <li>Presented the qualitative coding application at the Midwest Endocrine Society Conference and received the runner-up award</li>
+      </ul>
+    </li>
+  
+    <li class="entry">
+      <p class="entry-date">March 2025 <i>to</i> August 2025</p>
+      <h3 class="entry-role">Student Researcher</h3>
+      <p class="entry-org">Carleton College &middot; Northfield, Minnesota &middot; St. Louis, Missouri</p>
+      <ul>
+        <li>Designed and conducted A/B testing to evaluate software design using non-parametric statistical methods</li>
+        <li>Presented the completed research on the national level at SIGCSE 2026</li>
+        <li>Applied human factors and program analysis methods to investigate how users interact with and learn from software design tools</li>
+        <li>Analyzed and visualized experimental data using Python, Pandas, Matplotlib, and PyWaffle to communicate research findings</li>
+        <li>Developed a research website and visual communication materials to translate quantitative findings into accessible research outputs</li>
+        <li>Contributed to research publications and ongoing studies in human-computer interaction and software design education</li>
+      </ul>
+    </li>
+  
+    <li class="entry">
+      <p class="entry-date">September 2025 <i>to</i> present</p>
+      <h3 class="entry-role">Senior Digital Humanities Associate</h3>
+      <p class="entry-org">Carleton College &middot; Northfield, Minnesota &middot; Poughkeepsie, New York</p>
+      <ul>
+        <li>Developed and maintained digital research projects integrating web development, information architecture, and computational methods into humanities scholarship</li>
+        <li>Received an academic travel award to develop a project on the national level at ILiADS 2026</li>
+        <li>Collaborated with faculty, students, and external institutions to design digital research resources</li>
+        <li>Built and integrated interactive content using HTML, CSS, JavaScript, ArcGIS, WordPress, and Omeka</li>
+        <li>Applied user-centered design and visual communication principles to improve the accessibility and usability of digital scholarship</li>
+      </ul>
+    </li>
+  
+    <li class="entry">
+      <p class="entry-date">June 2020 <i>to</i> present</p>
+      <h3 class="entry-role">CEO &amp; Creative Director</h3>
+      <p class="entry-org">Haus of Frog</p>
+      <ul>
+        <li>Lead product design, branding, digital marketing, and e-commerce strategy for an independent creative business with thousands of dollars generated in product sales</li>
+        <li>Designed user-facing product graphics and digital experiences using Figma, Procreate, and Canva to strengthen brand identity and customer engagement</li>
+        <li>Incorporated customer feedback and engagement data into product and design decisions</li>
+      </ul>
+    </li>
+  
+    <li class="entry">
+      <p class="entry-date">June 2024 <i>to</i> July 2024</p>
+      <h3 class="entry-role">Program &amp; Community Assistant</h3>
+      <p class="entry-org">Carleton College &middot; Northfield, Minnesota</p>
+      <ul>
+        <li>Organized and marketed large-scale programming for Carleton College&rsquo;s Summer Liberal Arts Institute</li>
+        <li>Independently supervised 18 pre-college students, developing leadership, communication, and community-building skills</li>
+        <li>Used Microsoft Office tools to organize student information and streamline program operations</li>
+      </ul>
+    </li>
+  
+    <li class="entry">
+      <p class="entry-date">August 2023 <i>to</i> present</p>
+      <h3 class="entry-role">PEAR Lifeguard &amp; Teaching Assistant</h3>
+      <p class="entry-org">Carleton College &middot; Northfield, Minnesota</p>
+      <ul>
+        <li>Balanced teaching, safety, and communication responsibilities alongside academics and collegiate athletics</li>
+        <li>Communicated and instructed students for the Swimming Fitness course under the direction of course staff</li>
+      </ul>
+    </li>
+  
+  </ol>
+    </div>
+  </section>
+
+
+   <!-- ============ MERCH ============ -->
+   <section class="section" id="merch">
+    <div class="panel">
+      <h2 class="section-title"><span>Haus of Frog</span></h2>
+      <div class="embed-frame">
+        <iframe
+          src="https://embed.creator-spring.com/widget?slug=my-store-11555447&per=28&currency=&page=1&layout=carousel-wide&theme=light"
+          title="Haus of Frog" width="100%" height="420" loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EDUCATION ============ -->
+  <section class="section" id="education">
+    <div class="panel">
+      <h2 class="section-title"><span>Education</span></h2>
+
+      <div class="edu-grid">
+        <div class="edu-card">
+          <p class="entry-date">September-2019 <i>to</i> June-2023</p>
+          <h3>Mayo Senior High School</h3>
+          <p>Honor's Diploma.</p>
+        </div>
+        <div class="edu-card">
+          <p class="entry-date">September-2023 <i>to</i> June-2027</p>
+          <h3>Carleton College</h3>
+          <p>Computer Science Major, Digital Arts and Humanities, Statistics, and Art History Minors. Student Athlete. Two Time All-district Academic Award
+            Honoree. Dean&rsquo;s List awardee (2023-2024).</p>
+        </div>
+      </div>
+    </div>
+  </section> 
+  
+  <!-- ============ CONTACT ============ -->
+  <section class="section" id="contact">
+    <div class="panel">
+      <h2 class="section-title"><span>Contact</span></h2>
+
+      <div class="contact-card">
+        <ul class="contact-list">
+          <li><span class="contact-label">Name</span>Aiden Johnson</li>
+          <li><span class="contact-label">Title</span>Student-Athlete at Carleton College</li>
+          <li><span class="contact-label">Email</span><a href="mailto:aidenjohnson728@gmail.com">aidenjohnson728@gmail.com</a></li>
+          <li><span class="contact-label">Phone</span><a href="tel:+15073981334">+1-507-398-1334</a></li>
+          <li><span class="contact-label">LinkedIn</span><a href="https://www.linkedin.com/in/aiden-johnson-9a912a279/" target="_blank" rel="noopener">linkedin.com/in/aiden-johnson</a></li>
+          <li><span class="contact-label">Instagram</span><a href="https://www.instagram.com/haus.of.frog/" target="_blank" rel="noopener">@haus.of.frog</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<button class="to-top" id="toTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15l7-8 7 8"/></svg>
+</button>
+
+<!-- Spring pop-up shop button -->
+<script src="https://cdn-spring.com/embed/pop-up-shop-button.js"></script>
+<pop-up-shop-button store-name="hausoffrog" title="Shop Haus of Frog" button-color="#33210F" text-color="#FBFCF9"></pop-up-shop-button>
+
+<script src="js/main.js"></script>
+</body>
 </html>

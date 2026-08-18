@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <title>Aiden Johnson</title>
+  <defs>
+    <filter id="crayon" x="-20%" y="-20%" width="140%" height="140%">
+      <!-- wander the line off straight -->
+      <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="3" seed="9" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="4.5"
+                         xChannelSelector="R" yChannelSelector="G" result="wobbly"/>
+      <!-- speckle it so it reads as wax, not vector -->
+      <feTurbulence type="fractalNoise" baseFrequency="0.42" numOctaves="4" seed="4" result="grain"/>
+      <feColorMatrix in="grain" type="luminanceToAlpha" result="grainAlpha"/>
+      <feComponentTransfer in="grainAlpha" result="grainLift">
+        <feFuncA type="gamma" exponent="0.18"/>
+      </feComponentTransfer>
+      <feComposite in="wobbly" in2="grainLift" operator="in"/>
+    </filter>
+  </defs>
+  <path d="M50 5 L78.5 88.5 L5.5 36.5 L94.5 35.6 L21.5 89.3 Z"
+        fill="none" stroke="#2F6136" stroke-width="11"
+        stroke-linejoin="round" stroke-linecap="round"
+        filter="url(#crayon)"/>
+</svg>
