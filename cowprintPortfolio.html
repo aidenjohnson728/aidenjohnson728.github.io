@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aiden Johnson — Cowprint Portfolio</title>
+<meta name="description" content="Aiden Johnson — Cowprint Portfolio">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Syne:wght@500..800&display=swap" rel="stylesheet">
+
+<!-- shares the tokens, colours and type of the main site -->
+<link href="css/style.css" rel="stylesheet">
+
+<style>
+/* =========================================================
+   Storybook — page-by-page view of the studio art
+   Built on the main stylesheet's tokens so the two match.
+   ========================================================= */
+
+/* no sidebar on this page, so the star layer gets the full width */
+.stars { inset: 0; }
+
+.book-page {
+  position: relative;
+  z-index: 1;
+  width: min(1460px, 100%);
+  margin-inline: auto;
+  padding: clamp(24px, 3vw, 44px) clamp(16px, 3vw, 34px) 72px;
+}
+
+.book-head { text-align: center; margin-bottom: clamp(16px, 2vw, 24px); }
+
+.book-head h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.1;
+  margin: 0 0 10px;
+  color: var(--ink);
+}
+.book-head p { margin: 0; color: var(--ink-mid); }
+
+/* ---------- the book itself ---------- */
+.book {
+  --book-pad: clamp(20px, 2.6vw, 36px);
+  position: relative;
+  background: var(--ink);
+  border: 0;
+  border-radius: var(--r);
+  box-shadow: var(--shadow-lift);
+  padding: var(--book-pad);
+  min-height: clamp(420px, calc(100vh - 300px), 880px);
+  overflow: hidden;
+  perspective: 1500px;
+}
+
+.plate {
+  position: absolute;
+  inset: var(--book-pad);
+  background: var(--surface);
+  border-radius: var(--r-sm);
+  padding: clamp(16px, 2vw, 30px);
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;   /* art gets the larger page */
+  gap: clamp(20px, 3vw, 44px);
+  align-items: stretch;   /* definite row height, so the art can size to it */
+  opacity: 0;
+  visibility: hidden;
+}
+.plate.active { opacity: 1; visibility: visible; z-index: 2; }
+
+/* the crease down the middle of the open sheet */
+.plate::before {
+  content: "";
+  position: absolute;
+  top: 7%; bottom: 7%; left: 50%;
+  width: 1px;
+  background: linear-gradient(to bottom,
+      transparent, rgba(47, 30, 18, .18) 18%, rgba(47, 30, 18, .18) 82%, transparent);
+  pointer-events: none;
+}
+.plate.leaving { visibility: visible; z-index: 1; }
+
+/* ---------- left page: the artwork ---------- */
+.plate-art { height: 100%; min-height: 0; display: grid; place-items: center; overflow: hidden; }
+
+.zoom-btn {
+  display: block;
+  position: relative;
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+  font: inherit;
+}
+.zoom-btn img {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: var(--r-sm);
+  transition: transform .3s cubic-bezier(.2,.8,.3,1);
+}
+.zoom-btn:hover img { transform: scale(1.02); }
+
+.zoom-hint {
+  position: absolute;
+  left: 50%; bottom: -4px;
+  transform: translateX(-50%);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--blue-deep);
+  opacity: 0;
+  transition: opacity .22s ease;
+}
+.zoom-btn:hover .zoom-hint,
+.zoom-btn:focus-visible .zoom-hint { opacity: 1; }
+
+/* ---------- right page: the words ---------- */
+.plate-note { align-self: center; }
+
+.plate-num {
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--blue-deep);
+  margin: 0 0 10px;
+}
+.plate-num span { color: var(--ink-soft); }
+
+.plate-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(22px, 2.6vw, 32px);
+  line-height: 1.2;
+  margin: 0 0 6px;
+  padding-bottom: 16px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5.4C24 2.2 52 1.4 76 3c16 1 30 2 42 1.2' fill='none' stroke='%235AC6EA' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E") left bottom / 150px 8px no-repeat;
+}
+.plate-meta {
+  font-size: 13.5px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin: 14px 0 14px;
+}
+.plate-body { margin: 0; color: var(--ink-soft); max-width: 46ch; }
+
+/* ---------- page turn ----------
+   Sequential, the way a real page moves: the current sheet swings away
+   on the spine, and only then does the next one swing in. Overlapping
+   the two just smears the type together.                              */
+.plate { transform-origin: 50% 50%; backface-visibility: hidden; }
+
+@keyframes leafOutFwd {
+  0%   { opacity: 1; transform: perspective(1400px) rotateY(0deg); }
+  70%  { opacity: 1; }
+  100% { opacity: 0; transform: perspective(1400px) rotateY(-88deg); }
+}
+@keyframes leafInFwd {
+  0%   { opacity: 0; transform: perspective(1400px) rotateY(88deg); }
+  35%  { opacity: 1; }
+  100% { opacity: 1; transform: perspective(1400px) rotateY(0deg); }
+}
+@keyframes leafOutBack {
+  0%   { opacity: 1; transform: perspective(1400px) rotateY(0deg); }
+  70%  { opacity: 1; }
+  100% { opacity: 0; transform: perspective(1400px) rotateY(88deg); }
+}
+@keyframes leafInBack {
+  0%   { opacity: 0; transform: perspective(1400px) rotateY(-88deg); }
+  35%  { opacity: 1; }
+  100% { opacity: 1; transform: perspective(1400px) rotateY(0deg); }
+}
+
+.plate.out-fwd  { animation: leafOutFwd  .34s cubic-bezier(.5,0,.9,.5) both; }
+.plate.out-back { animation: leafOutBack .34s cubic-bezier(.5,0,.9,.5) both; }
+.plate.in-fwd   { animation: leafInFwd   .40s cubic-bezier(.15,.7,.35,1) .30s both; }
+.plate.in-back  { animation: leafInBack  .40s cubic-bezier(.15,.7,.35,1) .30s both; }
+
+/* light raking across the sheet as it swings */
+.plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: var(--r-sm);
+  background: linear-gradient(90deg, rgba(47,30,18,.5), rgba(47,30,18,0) 55%);
+  opacity: 0;
+}
+@keyframes sheenOut { from { opacity: 0; } to { opacity: .55; } }
+@keyframes sheenIn  { from { opacity: .55; } to { opacity: 0; } }
+
+.plate.out-fwd::after  { animation: sheenOut .34s ease both; }
+.plate.out-back::after { animation: sheenOut .34s ease both; background: linear-gradient(270deg, rgba(47,30,18,.5), rgba(47,30,18,0) 55%); }
+.plate.in-fwd::after   { animation: sheenIn  .40s ease .30s both; background: linear-gradient(270deg, rgba(47,30,18,.5), rgba(47,30,18,0) 55%); }
+.plate.in-back::after  { animation: sheenIn  .40s ease .30s both; }
+
+/* the book flexes very slightly as a page lands */
+@keyframes bookSettle {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(.992); }
+  100% { transform: scale(1); }
+}
+.book.turning { animation: bookSettle .7s ease both; }
+
+/* ---------- controls ---------- */
+.book-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 26px;
+  flex-wrap: wrap;
+}
+
+.turn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 22px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--surface);
+  background: var(--ink);
+  border: 0;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: background .18s ease, transform .18s ease;
+}
+.turn:hover { background: #4B3320; transform: translateY(-2px); }
+.turn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+.counter {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: 9px 18px;
+  min-width: 108px;
+  text-align: center;
+}
+
+.dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  max-width: 620px;
+  margin-inline: auto;
+}
+.dot {
+  width: 11px; height: 11px;
+  padding: 0;
+  border: 1px solid var(--ink);
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background .18s ease, transform .18s ease;
+}
+.dot:hover { transform: scale(1.25); }
+.dot.is-current { background: var(--blue); border-color: var(--blue-deep); }
+
+.book-foot { text-align: center; margin-top: 34px; }
+
+/* ---------- zoom viewer ---------- */
+.viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);   /* minmax(0,..) lets the row shrink */
+  gap: 12px;
+  padding: 18px clamp(16px, 4vw, 48px) 34px;
+  background: rgba(38, 24, 14, .94);
+  animation: viewerIn .22s ease both;
+}
+.viewer[hidden] { display: none; }
+@keyframes viewerIn { from { opacity: 0; } to { opacity: 1; } }
+
+.viewer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.viewer-bar p {
+  margin: 0;
+  color: var(--cream);
+  font-weight: 700;
+}
+.viewer-close {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 20px;
+  color: var(--ink);
+  background: var(--cream);
+  border: 0;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+}
+.viewer-close:hover { background: var(--blue); }
+.viewer img {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: contain;
+  border-radius: var(--r-sm);
+  cursor: zoom-out;
+}
+body.is-locked { overflow: hidden; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 860px) {
+  .book { --book-pad: 14px; min-height: 0; }
+  .plate::before { display: none; }
+
+  .plate {
+    position: static;
+    inset: auto;
+    padding: 18px;
+    display: block;
+    opacity: 1;
+    visibility: visible;
+  }
+  .plate:not(.active) { display: none; }
+
+  .plate-art { height: auto; margin-bottom: 20px; }
+  .zoom-btn { height: auto; }
+  .zoom-btn img { height: auto; max-height: 56vh; }
+  .zoom-hint { position: static; transform: none; display: block; opacity: 1; margin-top: 10px; text-align: center; }
+  .plate-body { max-width: none; }
+
+  /* stacked layout — a slide reads better than a hinge here */
+  .plate.out-fwd, .plate.in-fwd, .plate.out-back, .plate.in-back { animation-duration: .4s; }
+  .plate.out-fwd  { animation-name: slideOutFwd; }
+  .plate.in-fwd   { animation-name: slideInFwd; }
+  .plate.out-back { animation-name: slideOutBack; }
+  .plate.in-back  { animation-name: slideInBack; }
+  .plate::after { display: none; }
+}
+
+@keyframes slideOutFwd  { to { opacity: 0; transform: translateX(-40px); } }
+@keyframes slideInFwd   { from { opacity: 0; transform: translateX(40px); } }
+@keyframes slideOutBack { to { opacity: 0; transform: translateX(40px); } }
+@keyframes slideInBack  { from { opacity: 0; transform: translateX(-40px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .plate.in-fwd, .plate.out-fwd, .plate.in-back, .plate.out-back { animation-duration: .01ms; }
+  .book.turning { animation: none; }
+  .plate::after { display: none; }
+  .zoom-btn:hover img { transform: none; }
+  .turn:hover { transform: none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- star shape + crayon filter, same as the main page -->
+<svg class="star-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="crayon" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="9" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="7"
+                         xChannelSelector="R" yChannelSelector="G" result="wobbly"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.62" numOctaves="4" seed="4" result="grain"/>
+      <feColorMatrix in="grain" type="luminanceToAlpha" result="grainAlpha"/>
+      <feComponentTransfer in="grainAlpha" result="grainLift">
+        <feFuncA type="gamma" exponent="0.35"/>
+      </feComponentTransfer>
+      <feComposite in="wobbly" in2="grainLift" operator="in"/>
+    </filter>
+    <symbol id="star-shape" viewBox="0 0 100 100">
+      <path d="M50 7 L77.3 86.8 L7.2 37.2 L92.8 36.4 L23.1 87.4 Z"
+            fill="none" stroke="currentColor" stroke-width="8"
+            stroke-linejoin="round" stroke-linecap="round"
+            filter="url(#crayon)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="stars" aria-hidden="true">
+  <svg class="star star--brown s1" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--white s2" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--green s3" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--brown s4" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--white s5" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--green s7" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--white s10" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--brown s11" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--green s13" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--white s16" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--brown s18" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--green s20" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+</div>
+
+<main class="book-page">
+
+  <header class="book-head">
+    <h1>Cowprint Portfolio</h1>
+  </header>
+
+  <div class="book" id="book" aria-roledescription="book">
+    <div id="pages" aria-live="polite">
+      <article class="plate" id="plate-1" role="group" aria-roledescription="page" aria-label="Page 1 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/1.png">
+            <img src="cowprint/1.png" alt="Cover 1" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 1 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 1</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-2" role="group" aria-roledescription="page" aria-label="Page 2 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/2.png">
+            <img src="cowprint/2.png" alt="Cover 2" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 2 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 2</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-3" role="group" aria-roledescription="page" aria-label="Page 3 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/3.png">
+            <img src="cowprint/3.png" alt="Cover 3" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 3 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 3</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-4" role="group" aria-roledescription="page" aria-label="Page 4 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/4.png">
+            <img src="cowprint/4.png" alt="Cover 4" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 4 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 4</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-5" role="group" aria-roledescription="page" aria-label="Page 5 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/5.png">
+            <img src="cowprint/5.png" alt="Cover 5" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 5 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 5</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-6" role="group" aria-roledescription="page" aria-label="Page 6 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/6.png">
+            <img src="cowprint/6.png" alt="Cover 6" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 6 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 6</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-7" role="group" aria-roledescription="page" aria-label="Page 7 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/7.png">
+            <img src="cowprint/7.png" alt="Cover 7" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 7 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 7</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-8" role="group" aria-roledescription="page" aria-label="Page 8 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/8.png">
+            <img src="cowprint/8.png" alt="Cover 8" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 8 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 8</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-9" role="group" aria-roledescription="page" aria-label="Page 9 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/9.png">
+            <img src="cowprint/9.png" alt="Cover 9" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 9 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 9</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-10" role="group" aria-roledescription="page" aria-label="Page 10 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/10.png">
+            <img src="cowprint/10.png" alt="Cover 10" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 10 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 10</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-11" role="group" aria-roledescription="page" aria-label="Page 11 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/11.png">
+            <img src="cowprint/11.png" alt="Cover 11" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 11 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 11</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-12" role="group" aria-roledescription="page" aria-label="Page 12 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/12.png">
+            <img src="cowprint/12.png" alt="Cover 12" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 12 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 12</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-13" role="group" aria-roledescription="page" aria-label="Page 13 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/13.png">
+            <img src="cowprint/13.png" alt="Cover 13" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 13 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 13</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-14" role="group" aria-roledescription="page" aria-label="Page 14 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/14.png">
+            <img src="cowprint/14.png" alt="Cover 14" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 14 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 14</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-15" role="group" aria-roledescription="page" aria-label="Page 15 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/15.png">
+            <img src="cowprint/15.png" alt="Cover 15" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 15 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 15</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-16" role="group" aria-roledescription="page" aria-label="Page 16 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/16.png">
+            <img src="cowprint/16.png" alt="Cover 16" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 16 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 16</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-17" role="group" aria-roledescription="page" aria-label="Page 17 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/17.png">
+            <img src="cowprint/17.png" alt="Cover 17" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 17 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 17</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-18" role="group" aria-roledescription="page" aria-label="Page 18 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/18.png">
+            <img src="cowprint/18.png" alt="Cover 18" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 18 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 18</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-19" role="group" aria-roledescription="page" aria-label="Page 19 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/19.png">
+            <img src="cowprint/19.png" alt="Cover 19" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 19 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 19</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-20" role="group" aria-roledescription="page" aria-label="Page 20 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/20.png">
+            <img src="cowprint/20.png" alt="Cover 20" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 20 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 20</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-21" role="group" aria-roledescription="page" aria-label="Page 21 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/21.png">
+            <img src="cowprint/21.png" alt="Cover 21" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 21 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 21</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+      <article class="plate" id="plate-22" role="group" aria-roledescription="page" aria-label="Page 22 of 22">
+        <div class="plate-art">
+          <button class="zoom-btn" type="button" data-src="cowprint/22.png">
+            <img src="cowprint/22.png" alt="Cover 22" loading="lazy" decoding="async">
+            <span class="zoom-hint">Click to enlarge</span>
+          </button>
+        </div>
+        <div class="plate-note">
+          <p class="plate-num">Page 22 <span>of 22</span></p>
+          <h2 class="plate-title">Cover 22</h2>
+          <!-- EDIT: medium, size, year -->
+          <p class="plate-meta">Placeholder</p>
+          <!-- EDIT: what this piece is about, what you were working through -->
+          <p class="plate-body">Placeholder</p>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div class="book-controls">
+    <button class="turn" id="prev" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      Previous
+    </button>
+    <p class="counter" id="counter">Page 1 of 22</p>
+    <button class="turn" id="next" type="button">
+      Next
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+
+  <div class="dots" id="dots" role="group" aria-label="Jump to a page">
+      <button class="dot" type="button" data-go="0" aria-label="Go to page 1"></button>
+      <button class="dot" type="button" data-go="1" aria-label="Go to page 2"></button>
+      <button class="dot" type="button" data-go="2" aria-label="Go to page 3"></button>
+      <button class="dot" type="button" data-go="3" aria-label="Go to page 4"></button>
+      <button class="dot" type="button" data-go="4" aria-label="Go to page 5"></button>
+      <button class="dot" type="button" data-go="5" aria-label="Go to page 6"></button>
+      <button class="dot" type="button" data-go="6" aria-label="Go to page 7"></button>
+      <button class="dot" type="button" data-go="7" aria-label="Go to page 8"></button>
+      <button class="dot" type="button" data-go="8" aria-label="Go to page 9"></button>
+      <button class="dot" type="button" data-go="9" aria-label="Go to page 10"></button>
+      <button class="dot" type="button" data-go="10" aria-label="Go to page 11"></button>
+      <button class="dot" type="button" data-go="11" aria-label="Go to page 12"></button>
+      <button class="dot" type="button" data-go="12" aria-label="Go to page 13"></button>
+      <button class="dot" type="button" data-go="13" aria-label="Go to page 14"></button>
+      <button class="dot" type="button" data-go="14" aria-label="Go to page 15"></button>
+      <button class="dot" type="button" data-go="15" aria-label="Go to page 16"></button>
+      <button class="dot" type="button" data-go="16" aria-label="Go to page 17"></button>
+      <button class="dot" type="button" data-go="17" aria-label="Go to page 18"></button>
+      <button class="dot" type="button" data-go="18" aria-label="Go to page 19"></button>
+      <button class="dot" type="button" data-go="19" aria-label="Go to page 20"></button>
+      <button class="dot" type="button" data-go="20" aria-label="Go to page 21"></button>
+      <button class="dot" type="button" data-go="21" aria-label="Go to page 22"></button>
+  </div>
+
+  <div class="book-foot">
+    <a class="btn" href="index.html">Back to home</a>
+  </div>
+
+</main>
+
+<!-- full-size viewer -->
+<div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-label="Enlarged artwork">
+  <div class="viewer-bar">
+    <p id="viewerCaption"></p>
+    <button class="viewer-close" id="viewerClose" type="button">Close</button>
+  </div>
+  <img id="viewerImg" src="" alt="">
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var pages   = Array.prototype.slice.call(document.querySelectorAll(".plate"));
+  var dots    = Array.prototype.slice.call(document.querySelectorAll(".dot"));
+  var counter = document.getElementById("counter");
+  var prevBtn = document.getElementById("prev");
+  var nextBtn = document.getElementById("next");
+  var book    = document.getElementById("book");
+  var index   = 0;
+  var busy    = false;
+
+  var ANIM = {
+     1: { inClass: "in-fwd",  outClass: "out-fwd"  },
+    "-1": { inClass: "in-back", outClass: "out-back" }
+  };
+
+  function clearAnim(el) {
+    el.classList.remove("in-fwd", "out-fwd", "in-back", "out-back", "leaving");
+  }
+
+  function paint() {
+    counter.textContent = "Page " + (index + 1) + " of " + pages.length;
+    dots.forEach(function (d, i) {
+      d.classList.toggle("is-current", i === index);
+      d.setAttribute("aria-current", i === index ? "true" : "false");
+    });
+    // give the browser a head start on the neighbouring images
+    [index + 1, index - 1].forEach(function (i) {
+      var p = pages[(i + pages.length) % pages.length];
+      var img = p && p.querySelector("img");
+      if (img && img.loading === "lazy") img.loading = "eager";
+    });
+  }
+
+  function go(target, dir) {
+    if (busy) return;
+    target = (target + pages.length) % pages.length;
+    if (target === index) return;
+
+    var from = pages[index];
+    var to   = pages[target];
+    var a    = ANIM[dir] || ANIM[1];
+
+    busy = true;
+    clearAnim(from); clearAnim(to);
+
+    book.classList.remove("turning");
+    void book.offsetWidth;              // restart the settle animation
+    book.classList.add("turning");
+
+    from.classList.add("leaving", a.outClass);
+    from.addEventListener("animationend", function handler() {
+      from.removeEventListener("animationend", handler);
+      from.classList.remove("active");
+      clearAnim(from);
+      busy = false;
+    });
+
+    to.classList.add("active", a.inClass);
+    to.addEventListener("animationend", function handler() {
+      to.removeEventListener("animationend", handler);
+      clearAnim(to);
+    });
+
+    index = target;
+    paint();
+
+    // safety net if animationend never fires (e.g. tab backgrounded)
+    setTimeout(function () { busy = false; }, 1000);
+  }
+
+  nextBtn.addEventListener("click", function () { go(index + 1,  1); });
+  prevBtn.addEventListener("click", function () { go(index - 1, -1); });
+
+  dots.forEach(function (d) {
+    d.addEventListener("click", function () {
+      var t = parseInt(d.dataset.go, 10);
+      go(t, t > index ? 1 : -1);
+    });
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (!viewer.hidden) return;                 // viewer owns the keys while open
+    if (e.key === "ArrowRight") go(index + 1,  1);
+    if (e.key === "ArrowLeft")  go(index - 1, -1);
+  });
+
+  // swipe
+  var x0 = null;
+  var swiped = false;
+
+  book.addEventListener("touchstart", function (e) {
+    x0 = e.changedTouches[0].clientX;
+    swiped = false;
+  }, { passive: true });
+
+  book.addEventListener("touchmove", function (e) {
+    if (x0 === null) return;
+    // a drag across the artwork is a page turn, not a tap to enlarge
+    if (Math.abs(e.changedTouches[0].clientX - x0) > 12) swiped = true;
+  }, { passive: true });
+
+  book.addEventListener("touchend", function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 45) go(index + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+    x0 = null;
+  }, { passive: true });
+
+  /* ---------- zoom viewer ---------- */
+  var viewer  = document.getElementById("viewer");
+  var vImg    = document.getElementById("viewerImg");
+  var vCap    = document.getElementById("viewerCaption");
+  var vClose  = document.getElementById("viewerClose");
+  var lastFocus = null;
+
+  // read the heading rather than a hand-typed data-caption
+  function captionFor(btn) {
+    var plate = btn.closest(".plate");
+    var title = plate && plate.querySelector(".plate-title");
+    return title ? title.textContent.trim() : (btn.querySelector("img") || {}).alt || "";
+  }
+
+  function openViewer(src, caption, trigger) {
+    vImg.src = src;
+    vImg.alt = caption;
+    vCap.textContent = caption;
+    viewer.hidden = false;
+    document.body.classList.add("is-locked");
+    lastFocus = trigger;
+    vClose.focus();
+  }
+
+  function closeViewer() {
+    viewer.hidden = true;
+    document.body.classList.remove("is-locked");
+    if (lastFocus) { lastFocus.focus(); lastFocus = null; }
+  }
+
+  document.querySelectorAll(".zoom-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      if (swiped) { swiped = false; return; }   // that was a page turn
+      openViewer(btn.dataset.src, captionFor(btn), btn);
+    });
+  });
+
+  vClose.addEventListener("click", closeViewer);
+  viewer.addEventListener("click", function (e) {
+    if (e.target === viewer || e.target === vImg) closeViewer();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !viewer.hidden) closeViewer();
+  });
+
+  /* ---------- start ---------- */
+  pages[0].classList.add("active");
+  paint();
+})();
+</script>
+
+</body>
+</html>
