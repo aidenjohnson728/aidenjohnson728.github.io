@@ -486,6 +486,21 @@
   }
   .work-card.is-hidden { display: none; }
   
+  /* filtering: cards fade out, survivors slide to their new slots (FLIP),
+     newcomers fade up */
+  .work-card.is-leaving {
+    opacity: 0;
+    transform: scale(.94);
+    transition: opacity .16s ease, transform .16s ease;
+    pointer-events: none;
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: scale(.94) translateY(12px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .work-card.is-entering { animation: cardIn .4s cubic-bezier(.2, .8, .3, 1) both; }
+  .work-card.is-flipping { z-index: 3; }
+  
   .card-face {
     display: flex;
     flex-direction: column;
@@ -607,10 +622,13 @@
     border-bottom: 1px solid var(--line-soft);
   }
   .case-bar h2 {
-    font-family: var(--font-display);
-    font-weight: 850;
-    font-size: clamp(21px, 2.8vw, 30px);
-    line-height: 1.2;
+    /* body face here, not the display one — long project titles need to
+       read cleanly at a glance more than they need character */
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: clamp(21px, 2.6vw, 29px);
+    letter-spacing: -.01em;
+    line-height: 1.25;
     margin: 0;
   }
   .case-close {
@@ -921,6 +939,7 @@
       transition-duration: .01ms !important;
     }
     .work-card:hover, .work-card:focus-within { transform: none; }
+    .work-card.is-entering { animation: none; }
     .reveal { opacity: 1; translate: none; }
   }
   

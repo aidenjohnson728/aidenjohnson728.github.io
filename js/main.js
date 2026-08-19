@@ -68,27 +68,89 @@
     var cards   = Array.prototype.slice.call(document.querySelectorAll(".work-card"));
     var empty   = document.getElementById("emptyState");
   
-    filters.forEach(function (button) {
-      button.addEventListener("click", function () {
-        var value = button.dataset.filter;
+    function matches(card, value) {
+      var cats = (card.dataset.cat || "").split(/\s+/);
+      return value === "all" || cats.indexOf(value) !== -1;
+    }
   
-        filters.forEach(function (b) { b.classList.remove("is-active"); });
-        button.classList.add("is-active");
+    function isVisible(card) { return !card.classList.contains("is-hidden"); }
   
-        var shown = 0;
+    // FLIP: record where every visible card is now, change the DOM, then
+    // animate each survivor from its old box to its new one.
+    function applyFilter(value) {
+      var keep = cards.filter(function (c) { return matches(c, value); });
   
-        cards.forEach(function (card) {
-          var cats = (card.dataset.cat || "").split(/\s+/);
-          var match = value === "all" || cats.indexOf(value) !== -1;
+      if (empty) empty.hidden = keep.length !== 0;
   
-          card.classList.toggle("is-hidden", !match);
-          if (match) shown++;
+      cards.forEach(function (card) {
+        if (!matches(card, value) && card.classList.contains("is-open")) closeCard(card);
+      });
   
-          // a hidden card should not stay expanded
-          if (!match && card.classList.contains("is-open")) closeCard(card);
+      if (reduceMotion) {
+        cards.forEach(function (c) { c.classList.toggle("is-hidden", !matches(c, value)); });
+        return;
+      }
+  
+      var first = new Map();
+      cards.forEach(function (c) {
+        if (isVisible(c)) first.set(c, c.getBoundingClientRect());
+      });
+  
+      var leaving = cards.filter(function (c) {
+        return isVisible(c) && !matches(c, value);
+      });
+      leaving.forEach(function (c) { c.classList.add("is-leaving"); });
+  
+      setTimeout(function () {
+        leaving.forEach(function (c) {
+          c.classList.remove("is-leaving");
+          c.classList.add("is-hidden");
         });
   
-        if (empty) empty.hidden = shown !== 0;
+        var entering = cards.filter(function (c) {
+          return matches(c, value) && !first.has(c);
+        });
+        entering.forEach(function (c) { c.classList.remove("is-hidden"); });
+  
+        keep.forEach(function (card) {
+          var before = first.get(card);
+  
+          if (!before) {                       // newly revealed
+            card.classList.add("is-entering");
+            setTimeout(function () { card.classList.remove("is-entering"); }, 420);
+            return;
+          }
+  
+          var after = card.getBoundingClientRect();
+          var dx = before.left - after.left;
+          var dy = before.top - after.top;
+          if (!dx && !dy) return;
+  
+          card.classList.add("is-flipping");
+          card.style.transform = "translate(" + dx + "px, " + dy + "px)";
+  
+          requestAnimationFrame(function () {
+            card.style.transition = "transform .4s cubic-bezier(.2, .8, .3, 1)";
+            card.style.transform = "";
+          });
+  
+          var settle = function () {
+            card.style.transition = "";
+            card.style.transform = "";
+            card.classList.remove("is-flipping");
+            card.removeEventListener("transitionend", settle);
+          };
+          card.addEventListener("transitionend", settle);
+          setTimeout(settle, 700);             // in case transitionend never fires
+        });
+      }, leaving.length ? 170 : 0);
+    }
+  
+    filters.forEach(function (button) {
+      button.addEventListener("click", function () {
+        filters.forEach(function (b) { b.classList.remove("is-active"); });
+        button.classList.add("is-active");
+        applyFilter(button.dataset.filter);
       });
     });
   

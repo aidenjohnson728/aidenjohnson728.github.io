@@ -1,319 +1,546 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Carleton Digital Architectural Exhibit</title>
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Syne:wght@500..800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
 <style>
+/* =========================================================
+   Same tokens as the main portfolio, kept local so this page
+   works wherever it sits in the folder structure.
+   ========================================================= */
+:root {
+  --bg:         #94C194;
+  --surface:    #FBFCF9;
+  --surface-2:  #F1F5EF;
 
-body{
-    margin:0;
-    font-family:"Helvetica Neue", Arial, sans-serif;
-    line-height:1.6;
-    color:#333;
+  --ink:        #2F1E12;
+  --ink-mid:    #3D2A1A;
+  --ink-soft:   #4C3D30;
+  --line:       rgba(47, 30, 18, .14);
+  --line-soft:  rgba(47, 30, 18, .08);
+
+  --blue:       #5AC6EA;
+  --blue-deep:  #17738F;
+  --blue-wash:  rgba(90, 198, 234, .20);
+  --cream:      #FBFCF9;
+  --star-green: #2C5233;
+  --star-brown: #3E2A17;
+
+  --font-display: "Syne", "Trebuchet MS", sans-serif;
+  --font-body: "Atkinson Hyperlegible", system-ui, -apple-system, sans-serif;
+
+  --measure: 1400px;
+  --r: 14px;
+  --r-sm: 8px;
+  --r-pill: 100px;
+
+  --shadow: 0 1px 2px rgba(47, 30, 18, .06), 0 6px 18px rgba(47, 30, 18, .10);
+  --shadow-lift:
+      0 8px 16px rgba(30, 45, 25, .16),
+      0 24px 44px rgba(30, 45, 25, .26),
+      0 52px 90px rgba(30, 45, 25, .34);
 }
 
-/* HEADER */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
-header{
-    background:#222;
-    color:white;
-    padding:30px;
-    text-align:center;
-    font-size:32px;
-    letter-spacing:1px;
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* INTRO SECTION */
+img { max-width: 100%; display: block; }
+a { color: var(--blue-deep); text-underline-offset: 3px; }
+a:hover { color: var(--ink); }
 
-.intro{
-    max-width:900px;
-    margin:auto;
-    padding:60px 40px;
-    font-size:18px;
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 3px; }
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0;
+  background: var(--ink); color: var(--surface);
+  padding: 12px 18px; z-index: 1000;
+}
+.skip-link:focus { left: 0; top: 0; }
+
+/* ---------- star field ---------- */
+.star-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.star { position: absolute; display: block; overflow: visible; }
+.star--brown { color: var(--star-brown); opacity: .34; }
+.star--green { color: var(--star-green); opacity: .34; }
+.star--white { color: var(--cream);      opacity: .58; }
+
+.e1 { width: 74px; height: 74px; top: 5%;  left: 4%;  rotate: -13deg; }
+.e2 { width: 52px; height: 52px; top: 17%; left: 90%; rotate: 17deg; }
+.e3 { width: 44px; height: 44px; top: 38%; left: 2%;  rotate: 8deg; }
+.e4 { width: 62px; height: 62px; top: 66%; left: 93%; rotate: -22deg; }
+.e5 { width: 40px; height: 40px; top: 82%; left: 6%;  rotate: 26deg; }
+.e6 { width: 56px; height: 56px; top: 28%; left: 79%; rotate: 21deg; }
+
+/* ---------- page shell ---------- */
+.page { position: relative; z-index: 1; }
+
+.masthead {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 30px clamp(20px, 4vw, 48px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.masthead h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1.2;
+  margin: 0;
+  letter-spacing: -.01em;
+}
+.masthead a {
+  color: var(--cream);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid rgba(251, 252, 249, .35);
+  padding-bottom: 2px;
+}
+.masthead a:hover { color: var(--blue); border-bottom-color: var(--blue); }
+
+.wrap {
+  width: min(var(--measure), 100%);
+  margin-inline: auto;
+  padding: clamp(28px, 4vw, 56px) clamp(16px, 2.4vw, 34px) 80px;
 }
 
-.intro p{
-    margin-bottom:24px;
+/* one rectangle per block, as on the portfolio */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  padding: 34px clamp(22px, 3vw, 46px) 40px;
+  margin-bottom: 34px;
 }
 
-/* SCROLL CUE */
-
-.scroll-down{
-    text-align:center;
-    font-size:18px;
-    margin-top:40px;
-    color:#777;
+.panel-title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.2vw, 36px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 30px;
+  text-align: center;
+}
+.panel-title span {
+  display: inline-block;
+  padding: 0 10px 20px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5.4C24 2.2 52 1.4 76 3c16 1 30 2 42 1.2' fill='none' stroke='%235AC6EA' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E") center bottom 4px / calc(100% - 20px) 8px no-repeat;
 }
 
-/* MAP */
+/* the reading column is centred in the panel; the lines themselves stay
+   left-aligned, since centred prose gives every line a ragged left edge
+   and your eye loses the start of the next one */
+.intro p { margin: 0 auto 22px; max-width: 70ch; }
+.intro p:last-of-type { margin-bottom: 0; }
 
-#map{
-    height:95vh;
-    width:100%;
+.scroll-down {
+  max-width: 70ch;
+  margin: 32px auto 0;
+  padding: 16px 20px;
+  background: var(--surface-2);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  font-weight: 700;
+  color: var(--ink-soft);
 }
 
-/* MARKERS */
+/* ---------- map ---------- */
+.map-panel { padding: clamp(14px, 1.8vw, 22px); }
 
-.building-marker{
-    width:22px;
-    height:22px;
-    background:#ff2b2b;
-    border-radius:50%;
-    border:3px solid white;
-    box-shadow:0 0 16px rgba(255,0,0,.9);
-    transition:transform .15s ease;
+#map {
+  height: clamp(460px, 74vh, 820px);
+  width: 100%;
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
 }
 
-.building-marker:hover{
-    transform:scale(1.4);
+.map-note {
+  margin: 14px auto 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-align: center;
 }
 
-/* FADE-IN ANIMATION */
+/* markers: bright enough to hold up over satellite imagery */
+.building-marker {
+  width: 20px;
+  height: 20px;
+  background: var(--blue);
+  border-radius: 50%;
+  border: 3px solid var(--cream);
+  box-shadow: 0 0 0 1.5px rgba(47, 30, 18, .55), 0 2px 8px rgba(0, 0, 0, .5);
+  transition: transform .16s ease, background .16s ease;
+}
+.leaflet-marker-icon:hover .building-marker,
+.leaflet-marker-icon:focus .building-marker {
+  transform: scale(1.5);
+  background: var(--ink);
+}
+.leaflet-marker-icon:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
 
-.fade-in-section{
-    opacity:0;
-    transform:translateY(30px);
-    transition:opacity 1s ease, transform 1s ease;
+/* ---------- hover preview card ---------- */
+.leaflet-tooltip.building-tip {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-lift);
+  padding: 15px 17px 14px;
+  width: 290px;
+  max-width: 78vw;
+  white-space: normal;          /* Leaflet defaults tooltips to nowrap */
+  font-family: var(--font-body);
+  color: var(--ink);
+  line-height: 1.5;
+}
+.leaflet-tooltip.building-tip::before { display: none; }   /* drop the arrow */
+
+.tip-era {
+  margin: 0 0 7px;
+  font-size: 11px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--blue-deep);
+}
+.tip-name {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.25;
+  margin: 0 0 8px;
+}
+.tip-blurb {
+  margin: 0;
+  font-size: 15.5px;
+  color: var(--ink-soft);
+}
+.tip-cta {
+  margin: 12px 0 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--blue-deep);
 }
 
-.fade-in-section.visible{
-    opacity:1;
-    transform:translateY(0);
+/* leaflet chrome, themed */
+.leaflet-control-layers,
+.leaflet-bar {
+  border: 1px solid var(--line) !important;
+  border-radius: var(--r-sm) !important;
+  box-shadow: var(--shadow) !important;
+  font-family: var(--font-body);
+}
+.leaflet-control-layers-expanded {
+  background: var(--surface);
+  color: var(--ink);
+  padding: 12px 14px;
+  font-size: 15px;
+}
+.leaflet-bar a { color: var(--ink); }
+.leaflet-container { font-family: var(--font-body); }
+.leaflet-container a.leaflet-popup-close-button { color: var(--ink); }
+
+/* ---------- fade-in ---------- */
+.fade-in-section { opacity: 0; translate: 0 24px; transition: opacity .8s ease, translate .8s ease; }
+.fade-in-section.visible { opacity: 1; translate: none; }
+
+.foot { text-align: center; }
+.btn {
+  display: inline-block;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.btn:hover { color: var(--ink); transform: translateY(-2px); box-shadow: var(--shadow-lift); }
+
+@media (max-width: 700px) {
+  body { font-size: 18.5px; }
+  .e3, .e6 { display: none; }
+  .panel { padding: 26px 20px 32px; }
+  .leaflet-tooltip.building-tip { width: 240px; padding: 13px 14px; }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+  .fade-in-section { opacity: 1; translate: none; }
+}
 </style>
-
 </head>
 
 <body>
 
-<header>
-Carleton Digital Architectural Exhibit
-</header>
+<a class="skip-link" href="#map">Skip to the map</a>
 
-<section class="intro">
+<!-- crayon star shape, same as the portfolio -->
+<svg class="star-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="crayon" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="9" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="7"
+                         xChannelSelector="R" yChannelSelector="G" result="wobbly"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.62" numOctaves="4" seed="4" result="grain"/>
+      <feColorMatrix in="grain" type="luminanceToAlpha" result="grainAlpha"/>
+      <feComponentTransfer in="grainAlpha" result="grainLift">
+        <feFuncA type="gamma" exponent="0.35"/>
+      </feComponentTransfer>
+      <feComposite in="wobbly" in2="grainLift" operator="in"/>
+    </filter>
+    <symbol id="star-shape" viewBox="0 0 100 100">
+      <path d="M50 7 L77.3 86.8 L7.2 37.2 L92.8 36.4 L23.1 87.4 Z"
+            fill="none" stroke="currentColor" stroke-width="8"
+            stroke-linejoin="round" stroke-linecap="round"
+            filter="url(#crayon)"/>
+    </symbol>
+  </defs>
+</svg>
 
-<p>
-The <em>Carleton Digital Exhibit</em> is a project intended to engage the user by letting them choose their own path. Instead of passive scrolling, the user becomes an active participant in the exhibit. Click on specific points on the map to get in depth information of the building’s history and broader architectural context. There may even be a fun fact or activity attached!
-</p>
-
-<p>
-Carleton’s architectural movements can be broken down into several eras, with each era calling to different architectural movements across the progression of Western Civilization. The timeline is roughly: early buildings (mainly influenced by Romanesque motifs), the Cowling Era (directly influenced by Collegiate Gothic), the Modern era (influenced by Modernism), and the New Century Era (a mix of calling back and calling forward a la the Language and Dining Center).
-</p>
-
-<p>
-After World War II, there was a push to create architecture that called forward to the future instead of the past. For this reason, many buildings fall under the Modern style after 1946.
-</p>
-
-<p>
-In contemporary Carleton, it is hard to perfectly label what architectural style we are currently in. It seems as though Carleton’s current architecture calls both back to the past and forward toward postmodernism. My focus for this exhibit is on Early Buildings, the Cowling Era, the Modern era, and a portion of the New Century Era.
-</p>
-
-<p>
-Much of the content for this exhibit is adapted from Lauren Soth’s <em>Architecture at Carleton: A Brief History and Guide</em> (2002). I am incredibly indebted to this resource, as it provided invaluable information for this project. I would also like to thank my professor, Baird Jarman, for giving me so much freedom in shaping this project and helping me focus its scope. This exhibit would not have been possible without his guidance.
-</p>
-
-<div class="scroll-down">
-  Scroll to explore the map. Click on the points to learn more!
+<div class="stars" aria-hidden="true">
+  <svg class="star star--brown e1" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--white e2" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--green e3" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--brown e4" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--white e5" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--green e6" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
 </div>
 
-</section>
+<div class="page">
 
-<div id="map-section">
-  <div id="map" class="fade-in-section"></div>
+  <header class="masthead">
+    <h1>Carleton Digital Architectural Exhibit</h1>
+    <a href="index.html">Back to portfolio</a>
+  </header>
+
+  <div class="wrap">
+
+    <section class="panel intro">
+      <h2 class="panel-title"><span>About this exhibit</span></h2>
+
+      <p>
+        The <em>Carleton Digital Exhibit</em> is a project intended to engage the user by letting them
+        choose their own path. Instead of passive scrolling, the user becomes an active participant in
+        the exhibit. Click on specific points on the map to get in depth information of the
+        building&rsquo;s history and broader architectural context. There may even be a fun fact or
+        activity attached!
+      </p>
+
+      <p>
+        Carleton&rsquo;s architectural movements can be broken down into several eras, with each era
+        calling to different architectural movements across the progression of Western Civilization.
+        The timeline is roughly: early buildings (mainly influenced by Romanesque motifs), the Cowling
+        Era (directly influenced by Collegiate Gothic), the Modern era (influenced by Modernism), and
+        the New Century Era (a mix of calling back and calling forward a la the Language and Dining
+        Center).
+      </p>
+
+      <p>
+        After World War II, there was a push to create architecture that called forward to the future
+        instead of the past. For this reason, many buildings fall under the Modern style after 1946.
+      </p>
+
+      <p>
+        In contemporary Carleton, it is hard to perfectly label what architectural style we are
+        currently in. It seems as though Carleton&rsquo;s current architecture calls both back to the
+        past and forward toward postmodernism. My focus for this exhibit is on Early Buildings, the
+        Cowling Era, the Modern era, and a portion of the New Century Era.
+      </p>
+
+      <p>
+        Much of the content for this exhibit is adapted from Lauren Soth&rsquo;s
+        <em>Architecture at Carleton: A Brief History and Guide</em> (2002). I am incredibly indebted
+        to this resource, as it provided invaluable information for this project. I would also like to
+        thank my professor, Baird Jarman, for giving me so much freedom in shaping this project and
+        helping me focus its scope. This exhibit would not have been possible without his guidance.
+      </p>
+
+      <p class="scroll-down">
+        Scroll to explore the map. Hover a point for a preview, then click to read the full entry.
+      </p>
+    </section>
+
+    <section class="panel map-panel fade-in-section">
+      <div id="map"></div>
+      <p class="map-note" id="wheelNote">
+        Click the map once to enable scroll-zoom.
+      </p>
+      <p class="map-note">
+        Use the layer control at the top right to switch between satellite, minimal, and street views.
+      </p>
+    </section>
+
+    <div class="foot">
+      <a class="btn" href="index.html">Back to portfolio</a>
+    </div>
+
+  </div>
 </div>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
 <script>
+(function () {
+  "use strict";
 
-/* MAP SETUP */
+  /* ---------------------------------------------------------
+     BUILDINGS
+     era and blurb feed the hover preview. Fill them in from
+     Soth and the individual pages — anything left as
+     "Placeholder" simply shows as written.
+     --------------------------------------------------------- */
+  var BUILDINGS = [
+    { name: "Skinner Memorial Chapel",     coords: [44.460262939525215, -93.15473482867172], link: "chapel.html",        era: "English Late Gothic", blurb: "The Skinner Memorial Chapel was constructed in 1916 by architects Patton, Holmes, and Flinn. The Chapel is based on English Late Gothic architecture, and looks distinct from the other collegiate gothic buildings made during the period." },
+    { name: "Goodsell Observatory",        coords: [44.46185860255292,  -93.152498539017],   link: "goodsell.html",      era: "11th-12th Century Style", blurb: "Another one of Carleton’s oldest buildings,Goodsell was built in 1887 by J Walter. Goodsell is quite romanesque in design - although it doesn’t directly call back to a direct medieval movement." },
+    { name: "Olin Hall",                   coords: [44.4615155060003,   -93.15247701351274], link: "olin.html",          era: "Humane Modernism", blurb: "Olin Hall of Science was designed by famous architect Minoru Yamasaki in 1961." },
+    { name: "Watson Hall",                 coords: [44.459367438472945, -93.15030219191526], link: "watson.html",        era: "Humane Modernism", blurb: "Watson Hall was designed by Minoru Yamasaki in 1966, famous for iconic buildings such as the original World Trade Center’s Twin Towers." },
+    { name: "Sayles-Hill Campus Center",   coords: [44.4613330197778,   -93.1560663187699],  link: "sayles.html",        era: "American Renaissance", blurb: "Sayles-Hill was built in 1910 with direction from architect Jerome Paul Jackson. Sayles-Hill shares many similarities with the styling of Laird." },
+    { name: "West Gym",                    coords: [44.46290987965156,  -93.15677672324976], link: "west-gym.html",      era: "Humane Modernism", blurb: "West Gymnasium was built by Minoru Yamasaki in 1964. Following World War 2, there was an emphasis on building for the future and not calling back to the past." },
+    { name: "Boliou Hall",                 coords: [44.46248347367986,  -93.15282684776545], link: "boliou.html",        era: "Modern", blurb: "Boliou was originally built in 1949 under the architectural direction of Magney, Tusler, and Setter." },
+    { name: "Bald Spot",                   coords: [44.461140628018825, -93.15461831985765], link: "bald-spot.html",     era: "Garden City Movement", blurb: "Although the Bald Spot is of course not a building, its history was too fascinating to omit from this project." },
+    { name: "Willis Hall",                 coords: [44.46078576676289,  -93.15599630082627], link: "willis.html",        era: "Second Empire Style", blurb: "Williis Hall was built from 1868 up until 1872 by architect firm Alden and Howe. It is Carleton’s longest running building, and has held many different hats." },
+    { name: "Laird Hall",                  coords: [44.462124451368226, -93.15395416211226], link: "laird.html",         era: "American Renaissance", blurb: "Laird Hall was built in 1905 by Architect firm Bertrand and Chamberlin. Laird was originally a science department, but has not been repurposed into the English department’s headquarters." },
+    { name: "Gould Libe",                  coords: [44.462361991294294, -93.1547509205125],  link: "gould-libe.html",    era: "Contextualism", blurb: "Originally built in 1956 by architectural firm Magney, Tusler, and Setter, Gould Libe stands as one of the most interesting buildings on campus." },
+    { name: "Davis Hall",                  coords: [44.460054385789896, -93.1565914162185],  link: "davis.html",         era: "Gothic Revivalism", blurb: "Davis Hall was constructed in 1923 by architectural firm Patton, Holmes, and Flinn. The dormitory was originally called “South Hall” and was a men's dormitory on the “West Side” of campus. " },
+    { name: "Nourse Hall",                 coords: [44.4605237210814,   -93.15189921174914], link: "nourse-evans.html",  era: "14th Century Style", blurb: "Nourse Hall (1917) and Evans Hall (1927) were built by architects Patton, Holmes, and Flinn. They are both historic dorms, with both being “women’s dorms” on the East side of campus." },
+    { name: "Evans Hall",                  coords: [44.46055081903262,  -93.14973518932771], link: "nourse-evans.html",  era: "14th Century Style", blurb: "Nourse Hall (1917) and Evans Hall (1927) were built by architects Patton, Holmes, and Flinn. They are both historic dorms, with both being “women’s dorms” on the East side of campus." },
+    { name: "Myers Hall",                  coords: [44.460717272395875, -93.15070601680367], link: "myers-musser.html",  era: "Modern", blurb: "Myers Hall (1958) and Musser Hall (1958) were built by architects Magney, Tusler, and Setter of Minneapolis. The dorm came at a time in which Carleton transitioned its housing model, with all dorms being the same amount of money." },
+    // NOTE: worth re-checking — this sits ~500m from Myers, over by Davis/Willis
+    { name: "Musser Hall",                 coords: [44.459924776919166, -93.15724740476894], link: "myers-musser.html",  era: "Modern", blurb: "Myers Hall (1958) and Musser Hall (1958) were built by architects Magney, Tusler, and Setter of Minneapolis. The dorm came at a time in which Carleton transitioned its housing model, with all dorms being the same amount of money." },
+    { name: "Language and Dining Center",  coords: [44.46104579345416,  -93.15136115278219], link: "ldc.html",           era: "Contextualism", blurb: "The Language and Dining Center is the youngest building of this exhibition - only built in 2002." }
+  ];
 
-const map = L.map('map').setView([44.4609,-93.1536],17);
+  var map = L.map("map", { scrollWheelZoom: false }).setView([44.4609, -93.1536], 17);
 
+  /* tile layers — attribution is a licence condition for all three */
+  var street = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  });
 
-/* MAP STYLES */
+  var minimal = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+    maxZoom: 20,
+    subdomains: "abcd",
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+  });
 
-const street = L.tileLayer(
-'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-);
+  var satellite = L.tileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+    maxZoom: 19,
+    attribution: "Imagery &copy; Esri, Maxar, Earthstar Geographics"
+  });
 
-const minimal = L.tileLayer(
-'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
-);
+  satellite.addTo(map);
 
-const satellite = L.tileLayer(
-'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-);
+  // wheel zoom off until the user engages, so scrolling the page doesn't
+  // get swallowed the moment the cursor crosses the map
+  function enableWheel() {
+    map.scrollWheelZoom.enable();
+    document.getElementById("wheelNote").hidden = true;
+  }
+  map.on("click", enableWheel);
+  map.on("focus", enableWheel);
 
+  L.control.layers({
+    "Satellite": satellite,
+    "Minimal Map": minimal,
+    "Street Map": street
+  }).addTo(map);
 
+  /* ---------- markers with a preview card on hover / focus ---------- */
+  function escapeHTML(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
 
-/* DEFAULT MAP */
+  function previewHTML(b) {
+    var era = b.era ? '<p class="tip-era">' + escapeHTML(b.era) + "</p>" : "";
+    var blurb = b.blurb ? '<p class="tip-blurb">' + escapeHTML(b.blurb) + "</p>" : "";
+    return era +
+      '<p class="tip-name">' + escapeHTML(b.name) + "</p>" +
+      blurb +
+      '<p class="tip-cta">Click to read the full entry &rarr;</p>';
+  }
 
-satellite.addTo(map);
+  BUILDINGS.forEach(function (b) {
+    var marker = L.marker(b.coords, {
+      icon: L.divIcon({
+        className: "",
+        html: '<div class="building-marker"></div>',
+        iconSize: [20, 20],
+        iconAnchor: [10, 10]
+      }),
+      keyboard: true,
+      riseOnHover: true,
+      title: b.name          // native tooltip + accessible name
+    }).addTo(map);
 
+    marker.bindTooltip(previewHTML(b), {
+      direction: "top",
+      offset: [0, -16],
+      className: "building-tip",
+      opacity: 1
+    });
 
-/* MAP STYLE TOGGLE */
+    marker.on("click", function () { window.location.href = b.link; });
 
-const baseMaps = {
-  "Satellite": satellite,
-"Minimal Map": minimal,
-"Street Map": street,
-};
+    var el = marker.getElement();
+    if (el) {
+      el.setAttribute("role", "link");
+      el.setAttribute("aria-label", b.name + " — read the full entry");
+    }
+  });
 
-L.control.layers(baseMaps).addTo(map);
+  /* ---------- fade-in ---------- */
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          io.unobserve(entry.target);
+          // Leaflet sizes itself on load; nudge it once the panel is in view
+          if (entry.target.querySelector("#map")) map.invalidateSize();
+        }
+      });
+    }, { threshold: .12 });
 
-
-/* MARKER FUNCTION */
-
-function buildingMarker(coords,name,link){
-
-const icon = L.divIcon({
-className:"",
-html:`<div class="building-marker"></div>`,
-iconSize:[22,22],
-iconAnchor:[11,11]
-});
-
-const marker = L.marker(coords,{icon}).addTo(map);
-
-marker.bindTooltip(name,{direction:"top",offset:[0,-10]});
-
-marker.on("click",()=>{
-window.location.href = link;
-});
-
-}
-
-
-/* BUILDINGS */
-buildingMarker(
-[44.460262939525215, -93.15473482867172],
-"Skinner Memorial Chapel",
-"chapel.html"
-);
-
-
-buildingMarker(
-[44.46185860255292, -93.152498539017],
-"Goodsell Observatory",
-"goodsell.html"
-);
-
-
-buildingMarker(
-[44.4615155060003, -93.15247701351274],
-"Olin Hall",
-"olin.html"
-);
-
-
-buildingMarker(
-[44.459367438472945, -93.15030219191526],
-"Watson Hall",
-"watson.html"
-);
-
-
-buildingMarker(
-[44.4613330197778, -93.1560663187699],
-"Sayles-Hill Campus Center",
-"sayles.html"
-);
-
-
-buildingMarker(
-[44.46290987965156, -93.15677672324976],
-"West Gym",
-"west-gym.html"
-);
-
-
-buildingMarker(
-[44.46248347367986, -93.15282684776545],
-"Boliou Hall",
-"boliou.html"
-);
-
-buildingMarker(
-[44.461140628018825, -93.15461831985765],
-"Bald Spot",
-"bald-spot.html"
-);
-
-buildingMarker(
-[44.46078576676289, -93.15599630082627],
-"Willis Hall",
-"willis.html"
-);
-
-buildingMarker(
-[44.462124451368226, -93.15395416211226],
-"Laird Hall",
-"laird.html"
-);
-
-buildingMarker(
-[44.462361991294294, -93.1547509205125],
-"Gould Libe",
-"gould-libe.html"
-);
-
-buildingMarker(
-[44.460054385789896, -93.1565914162185],
-"Davis Hall",
-"davis.html"
-);
-
-buildingMarker(
-[44.4605237210814, -93.15189921174914],
-"Nourse Hall",
-"nourse-evans.html"
-);
-
-buildingMarker(
-[44.46055081903262, -93.14973518932771],
-"Evans Hall",
-"nourse-evans.html"
-);
-
-buildingMarker(
-[44.460717272395875, -93.15070601680367],
-"Myers Hall",
-"myers-musser.html"
-);
-
-buildingMarker(
-[44.459924776919166, -93.15724740476894],
-"Musser Hall",
-"myers-musser.html"
-);
-
-buildingMarker(
-[44.46104579345416, -93.15136115278219],
-"Language and Dining Center",
-"ldc.html"
-);
-
-
-/* FADE-IN OBSERVER */
-
-const observer = new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-entry.target.classList.add("visible");
-}
-});
-});
-
-document.querySelectorAll(".fade-in-section").forEach(section=>{
-observer.observe(section);
-});
-
+    document.querySelectorAll(".fade-in-section").forEach(function (s) { io.observe(s); });
+  } else {
+    document.querySelectorAll(".fade-in-section").forEach(function (s) { s.classList.add("visible"); });
+  }
+})();
 </script>
 
 </body>
