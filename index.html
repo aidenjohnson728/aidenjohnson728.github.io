@@ -15,6 +15,29 @@
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Syne:wght@500..800&display=swap" rel="stylesheet">
 
 <link href="css/style.css" rel="stylesheet">
+
+<style>
+/* Two small additions for the portfolio grid. Kept here so they don't
+   collide with your edits to css/style.css — move them over any time. */
+
+/* some cards link straight to a page instead of opening a case study */
+a.card-face { text-decoration: none; color: inherit; }
+
+/* stand-in until you drop the real thumbnail in */
+.card-thumb--empty {
+  display: grid;
+  place-items: center;
+  border: 2px dashed var(--line);
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 10px;
+}
+</style>
 </head>
 
 <body>
@@ -167,12 +190,13 @@
 
     <div class="work-grid" id="workGrid">
 
-      <!-- ---------- 1 ---------- -->
-      <article class="work-card" data-cat="research">
+      <!-- ---------- 1. EnIAC ---------- -->
+      <article class="work-card" data-cat="projects">
         <button class="card-face" aria-expanded="false" aria-controls="case-1">
-          <span class="card-thumb"><img src="img/IMAGE5.png" alt="" loading="lazy"></span>
-          <span class="card-meta"><span class="tag">Research</span></span>
-          <span class="card-title">Integrating Critical Pedagogy into Undergraduate Software Design</span>
+          <span class="card-thumb card-thumb--empty" aria-hidden="true">Add image</span>
+          <!-- EDIT: swap the line above for <span class="card-thumb"><img src="img/your-file.png" alt="" loading="lazy"></span> -->
+          <span class="card-meta"><span class="tag">Projects</span></span>
+          <span class="card-title">EnIAC</span>
           <span class="card-hint" aria-hidden="true">Read more</span>
         </button>
 
@@ -188,16 +212,17 @@
             <li><h4>Placeholder</h4><p>Placeholder</p></li>
           </ol>
           <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
-          <a class="stamp" href="https://aidenjohnson728.github.io/research.html" target="_blank" rel="noopener">View the final product</a>
+          <!-- EDIT: put the real URL in href, or delete this line if there is nothing to link to -->
+          <a class="stamp" href="#">View the final product</a>
         </div>
       </article>
 
-      <!-- ---------- 2 ---------- -->
-      <article class="work-card" data-cat="projects">
+      <!-- ---------- 2. Software Design Research at Carleton College ---------- -->
+      <article class="work-card" data-cat="research">
         <button class="card-face" aria-expanded="false" aria-controls="case-2">
-          <span class="card-thumb"><img src="img/frisbeestats.png" alt="" loading="lazy"></span>
-          <span class="card-meta"><span class="tag">Projects</span></span>
-          <span class="card-title">Frisbee Stats!</span>
+          <span class="card-thumb"><img src="img/IMAGE5.png" alt="" loading="lazy"></span>
+          <span class="card-meta"><span class="tag">Research</span></span>
+          <span class="card-title">Software Design Research at Carleton College</span>
           <span class="card-hint" aria-hidden="true">Read more</span>
         </button>
 
@@ -213,16 +238,17 @@
             <li><h4>Placeholder</h4><p>Placeholder</p></li>
           </ol>
           <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
-          <a class="stamp" href="https://frisbeestats.com" target="_blank" rel="noopener">View the final product</a>
+          <a class="stamp" href="https://aidenjohnson728.github.io/research.html" target="_blank" rel="noopener">View the final product</a>
         </div>
       </article>
 
-      <!-- ---------- 3 ---------- -->
+      <!-- ---------- 3. CarlSVP ---------- -->
       <article class="work-card" data-cat="projects">
         <button class="card-face" aria-expanded="false" aria-controls="case-3">
-          <span class="card-thumb"><img src="img/digitalExhibit.png" alt="" loading="lazy"></span>
+          <span class="card-thumb card-thumb--empty" aria-hidden="true">Add image</span>
+          <!-- EDIT: swap the line above for <span class="card-thumb"><img src="img/your-file.png" alt="" loading="lazy"></span> -->
           <span class="card-meta"><span class="tag">Projects</span></span>
-          <span class="card-title">Carleton Digital Exhibit</span>
+          <span class="card-title">CarlSVP</span>
           <span class="card-hint" aria-hidden="true">Read more</span>
         </button>
 
@@ -238,16 +264,18 @@
             <li><h4>Placeholder</h4><p>Placeholder</p></li>
           </ol>
           <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
-          <a class="stamp" href="https://theaidenjohnson.com/carletonDigitalExhibit" target="_blank" rel="noopener">View the final product</a>
+          <!-- EDIT: put the real URL in href, or delete this line if there is nothing to link to -->
+          <a class="stamp" href="#">View the final product</a>
         </div>
       </article>
 
-      <!-- ---------- 4 ---------- -->
-      <article class="work-card" data-cat="haus">
+      <!-- ---------- 4. Breath Beyond Visibility ---------- -->
+      <article class="work-card" data-cat="projects">
         <button class="card-face" aria-expanded="false" aria-controls="case-4">
-          <span class="card-thumb"><img src="img/hausoffrog.png" alt="" loading="lazy"></span>
-          <span class="card-meta"><span class="tag">Haus of Frog</span></span>
-          <span class="card-title">Haus of Frog Merchandising Company</span>
+          <span class="card-thumb card-thumb--empty" aria-hidden="true">Add image</span>
+          <!-- EDIT: swap the line above for <span class="card-thumb"><img src="img/your-file.png" alt="" loading="lazy"></span> -->
+          <span class="card-meta"><span class="tag">Projects</span></span>
+          <span class="card-title">Breath Beyond Visibility</span>
           <span class="card-hint" aria-hidden="true">Read more</span>
         </button>
 
@@ -263,20 +291,22 @@
             <li><h4>Placeholder</h4><p>Placeholder</p></li>
           </ol>
           <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
-          <a class="stamp" href="https://hausoffrog.com" target="_blank" rel="noopener">View the final product</a>
+          <!-- EDIT: put the real URL in href, or delete this line if there is nothing to link to -->
+          <a class="stamp" href="#">View the final product</a>
         </div>
       </article>
 
-      <!-- ---------- 5 ---------- -->
-      <article class="work-card" data-cat="art">
-        <button class="card-face" aria-expanded="false" aria-controls="case-4">
-          <span class="card-thumb"><img src="img/cowprint.png" alt="" loading="lazy"></span>
-          <span class="card-meta"><span class="tag">Cowprint Portfolio</span></span>
-          <span class="card-title">Cowprint Portfolio</span>
+      <!-- ---------- 5. KER Unit Website ---------- -->
+      <article class="work-card" data-cat="projects">
+        <button class="card-face" aria-expanded="false" aria-controls="case-5">
+          <span class="card-thumb card-thumb--empty" aria-hidden="true">Add image</span>
+          <!-- EDIT: swap the line above for <span class="card-thumb"><img src="img/your-file.png" alt="" loading="lazy"></span> -->
+          <span class="card-meta"><span class="tag">Projects</span></span>
+          <span class="card-title">KER Unit Website</span>
           <span class="card-hint" aria-hidden="true">Read more</span>
         </button>
 
-        <div class="case" id="case-4" hidden>
+        <div class="case" id="case-5" hidden>
           <div class="case-cols">
             <div class="case-block"><h3>The problem</h3><p>Placeholder</p></div>
             <div class="case-block"><h3>My role</h3><p>Placeholder</p></div>
@@ -288,16 +318,18 @@
             <li><h4>Placeholder</h4><p>Placeholder</p></li>
           </ol>
           <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
-          <a class="stamp" href="https://theaidenjohnson.com/cowprintPortfolio.html" target="_blank" rel="noopener">View the final product</a>
+          <!-- EDIT: put the real URL in href, or delete this line if there is nothing to link to -->
+          <a class="stamp" href="#">View the final product</a>
         </div>
       </article>
 
-      <!-- ---------- 6 ---------- -->
-      <article class="work-card" data-cat="art">
+      <!-- ---------- 6. Frog Bot ---------- -->
+      <article class="work-card" data-cat="projects">
         <button class="card-face" aria-expanded="false" aria-controls="case-6">
-          <span class="card-thumb"><img src="img/StudioArtPortfolio.png" alt="" loading="lazy"></span>
-          <span class="card-meta"><span class="tag">Artwork</span></span>
-          <span class="card-title">Selected Studio Art Portfolio</span>
+          <span class="card-thumb card-thumb--empty" aria-hidden="true">Add image</span>
+          <!-- EDIT: swap the line above for <span class="card-thumb"><img src="img/your-file.png" alt="" loading="lazy"></span> -->
+          <span class="card-meta"><span class="tag">Projects</span></span>
+          <span class="card-title">Frog Bot</span>
           <span class="card-hint" aria-hidden="true">Read more</span>
         </button>
 
@@ -313,7 +345,131 @@
             <li><h4>Placeholder</h4><p>Placeholder</p></li>
           </ol>
           <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
-          <a class="stamp" href="https://aidenjohnson728.github.io/studioArtPortfolio.html" target="_blank" rel="noopener">View the final product</a>
+          <!-- EDIT: put the real URL in href, or delete this line if there is nothing to link to -->
+          <a class="stamp" href="#">View the final product</a>
+        </div>
+      </article>
+
+      <!-- ---------- 7. KER Speaker Diarization ---------- -->
+      <article class="work-card" data-cat="research">
+        <button class="card-face" aria-expanded="false" aria-controls="case-7">
+          <span class="card-thumb card-thumb--empty" aria-hidden="true">Add image</span>
+          <!-- EDIT: swap the line above for <span class="card-thumb"><img src="img/your-file.png" alt="" loading="lazy"></span> -->
+          <span class="card-meta"><span class="tag">Research</span></span>
+          <span class="card-title">KER Speaker Diarization</span>
+          <span class="card-hint" aria-hidden="true">Read more</span>
+        </button>
+
+        <div class="case" id="case-7" hidden>
+          <div class="case-cols">
+            <div class="case-block"><h3>The problem</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>My role</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>Methods</h3><p>Placeholder</p></div>
+          </div>
+          <ol class="process">
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+          </ol>
+          <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
+          <!-- no external page for this one; the panel is the whole entry -->
+        </div>
+      </article>
+
+      <!-- ---------- 8. Carleton Architectural Exhibit ---------- -->
+      <article class="work-card" data-cat="projects">
+        <button class="card-face" aria-expanded="false" aria-controls="case-8">
+          <span class="card-thumb"><img src="img/digitalExhibit.png" alt="" loading="lazy"></span>
+          <span class="card-meta"><span class="tag">Projects</span></span>
+          <span class="card-title">Carleton Architectural Exhibit</span>
+          <span class="card-hint" aria-hidden="true">Read more</span>
+        </button>
+
+        <div class="case" id="case-8" hidden>
+          <div class="case-cols">
+            <div class="case-block"><h3>The problem</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>My role</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>Methods</h3><p>Placeholder</p></div>
+          </div>
+          <ol class="process">
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+          </ol>
+          <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
+          <a class="stamp" href="https://theaidenjohnson.com/carletonDigitalExhibit" target="_blank" rel="noopener">View the final product</a>
+        </div>
+      </article>
+
+      <!-- ---------- 9. Haus of Frog ---------- -->
+      <article class="work-card" data-cat="haus">
+        <button class="card-face" aria-expanded="false" aria-controls="case-9">
+          <span class="card-thumb"><img src="img/hausoffrog.png" alt="" loading="lazy"></span>
+          <span class="card-meta"><span class="tag">Haus of Frog</span></span>
+          <span class="card-title">Haus of Frog</span>
+          <span class="card-hint" aria-hidden="true">Read more</span>
+        </button>
+
+        <div class="case" id="case-9" hidden>
+          <div class="case-cols">
+            <div class="case-block"><h3>The problem</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>My role</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>Methods</h3><p>Placeholder</p></div>
+          </div>
+          <ol class="process">
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+          </ol>
+          <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
+          <a class="stamp" href="https://hausoffrog.com" target="_blank" rel="noopener">View the final product</a>
+        </div>
+      </article>
+
+      <!-- ---------- 10. Studio Art Portfolio — links straight through ---------- -->
+      <article class="work-card" data-cat="art">
+        <a class="card-face" href="https://aidenjohnson728.github.io/studioArtPortfolio.html">
+          <span class="card-thumb"><img src="img/StudioArtPortfolio.png" alt="" loading="lazy"></span>
+          <span class="card-meta"><span class="tag">Artwork</span></span>
+          <span class="card-title">Studio Art Portfolio</span>
+          <span class="card-hint" aria-hidden="true">Open the portfolio &rarr;</span>
+        </a>
+      </article>
+
+      <!-- ---------- 11. Cowprint Cover Portfolio — links straight through ---------- -->
+      <article class="work-card" data-cat="art">
+        <a class="card-face" href="https://theaidenjohnson.com/cowprintPortfolio.html">
+          <span class="card-thumb"><img src="img/cowprint.png" alt="" loading="lazy"></span>
+          <span class="card-meta"><span class="tag">Artwork</span></span>
+          <span class="card-title">Cowprint Cover Portfolio</span>
+          <span class="card-hint" aria-hidden="true">Open the portfolio &rarr;</span>
+        </a>
+      </article>
+
+      <!-- ---------- 12. Python Paint ---------- -->
+      <article class="work-card" data-cat="projects">
+        <button class="card-face" aria-expanded="false" aria-controls="case-12">
+          <span class="card-thumb card-thumb--empty" aria-hidden="true">Add image</span>
+          <!-- EDIT: swap the line above for <span class="card-thumb"><img src="img/your-file.png" alt="" loading="lazy"></span> -->
+          <span class="card-meta"><span class="tag">Projects</span></span>
+          <span class="card-title">Python Paint</span>
+          <span class="card-hint" aria-hidden="true">Read more</span>
+        </button>
+
+        <div class="case" id="case-12" hidden>
+          <div class="case-cols">
+            <div class="case-block"><h3>The problem</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>My role</h3><p>Placeholder</p></div>
+            <div class="case-block"><h3>Methods</h3><p>Placeholder</p></div>
+          </div>
+          <ol class="process">
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+            <li><h4>Placeholder</h4><p>Placeholder</p></li>
+          </ol>
+          <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
+          <!-- EDIT: put the real URL in href, or delete this line if there is nothing to link to -->
+          <a class="stamp" href="#">View the final product</a>
         </div>
       </article>
 

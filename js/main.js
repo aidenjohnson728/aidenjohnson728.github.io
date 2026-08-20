@@ -83,7 +83,7 @@
       if (empty) empty.hidden = keep.length !== 0;
   
       cards.forEach(function (card) {
-        if (!matches(card, value) && card.classList.contains("is-open")) closeCard(card);
+        if (!matches(card, value) && hasPanel(card) && card.classList.contains("is-open")) closeCard(card);
       });
   
       if (reduceMotion) {
@@ -244,9 +244,17 @@
       });
     }
   
+    function hasPanel(card) {
+      var face = card.querySelector(".card-face");
+      return !!(face && face.getAttribute("aria-controls"));
+    }
+  
     cards.forEach(function (card) {
       var face = card.querySelector(".card-face");
       if (!face) return;
+  
+      // a card with no aria-controls is a plain link — let it navigate
+      if (!face.getAttribute("aria-controls")) return;
   
       face.addEventListener("click", function () {
         if (card.classList.contains("is-open")) { closeCard(card); return; }
