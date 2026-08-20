@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Paint — Aiden Johnson</title>
+<meta name="description" content="Python Paint — Aiden Johnson">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Syne:wght@500..800&display=swap" rel="stylesheet">
+
+<link href="css/style.css" rel="stylesheet">
+
+<style>
+/* no sidebar on this page, so the star layer gets the full width */
+.stars { inset: 0; }
+
+.paint-page {
+  position: relative;
+  z-index: 1;
+  width: min(1200px, 100%);
+  margin-inline: auto;
+  padding: clamp(24px, 3vw, 44px) clamp(16px, 2.4vw, 34px) 72px;
+}
+
+.masthead {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 26px clamp(20px, 4vw, 48px);
+  display: flex; flex-wrap: wrap;
+  align-items: baseline; justify-content: space-between; gap: 12px;
+  position: relative; z-index: 1;
+}
+.masthead h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(22px, 3vw, 34px);
+  margin: 0; line-height: 1.2;
+}
+.masthead a {
+  color: var(--cream); font-size: 15px; font-weight: 700; text-decoration: none;
+  border-bottom: 2px solid rgba(251, 252, 249, .35); padding-bottom: 2px;
+}
+.masthead a:hover { color: var(--blue); border-bottom-color: var(--blue); }
+
+.panel { margin-bottom: 30px; }
+.panel-title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 700; line-height: 1.2; margin: 0 0 26px; text-align: center;
+}
+.panel-title span {
+  display: inline-block; padding: 0 10px 20px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5.4C24 2.2 52 1.4 76 3c16 1 30 2 42 1.2' fill='none' stroke='%235AC6EA' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E") center bottom 4px / calc(100% - 20px) 8px no-repeat;
+}
+.panel p { margin: 0 auto 20px; max-width: 70ch; }
+.panel p:last-child { margin-bottom: 0; }
+
+/* ---------- the app ---------- */
+.paint-shell { padding: clamp(14px, 1.8vw, 22px); }
+
+#paint {
+  display: block;
+  width: 100%;
+  height: auto;               /* the canvas keeps its 1000x800 coordinate space */
+  max-width: 1000px;
+  margin-inline: auto;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  cursor: crosshair;
+  touch-action: manipulation;
+}
+
+.paint-tools {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  justify-content: center; margin-top: 18px;
+}
+.tool {
+  font-family: inherit; font-size: 15px; font-weight: 700;
+  padding: 11px 20px;
+  color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.tool:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.tool--dark { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.tool--dark:hover { background: #4B3320; }
+
+.paint-note {
+  margin: 16px auto 0; max-width: 70ch;
+  text-align: center; font-size: 15px; color: var(--ink-soft);
+}
+
+.page-foot { text-align: center; }
+</style>
+</head>
+
+<body>
+
+<a class="skip-link" href="#paint">Skip to the app</a>
+
+<svg class="star-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="crayon" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="9" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="7"
+                         xChannelSelector="R" yChannelSelector="G" result="wobbly"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.62" numOctaves="4" seed="4" result="grain"/>
+      <feColorMatrix in="grain" type="luminanceToAlpha" result="grainAlpha"/>
+      <feComponentTransfer in="grainAlpha" result="grainLift">
+        <feFuncA type="gamma" exponent="0.35"/>
+      </feComponentTransfer>
+      <feComposite in="wobbly" in2="grainLift" operator="in"/>
+    </filter>
+    <symbol id="star-shape" viewBox="0 0 100 100">
+      <path d="M50 7 L77.3 86.8 L7.2 37.2 L92.8 36.4 L23.1 87.4 Z"
+            fill="none" stroke="currentColor" stroke-width="8"
+            stroke-linejoin="round" stroke-linecap="round" filter="url(#crayon)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="stars" aria-hidden="true">
+  <svg class="star star--brown s1" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--white s2" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--green s4" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--white s5" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--brown s11" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+  <svg class="star star--green s13" viewBox="0 0 100 100"><use href="#star-shape"/></svg>
+</div>
+
+<header class="masthead">
+  <h1>Python Paint</h1>
+  <a href="index.html">Back to portfolio</a>
+</header>
+
+<main class="paint-page">
+
+  <section class="panel">
+    <h2 class="panel-title"><span>About this project</span></h2>
+    <p align="center">This was my final project for my introduction to Computer Science class. The idea was to emulate MS Paint, first you click a color and then a shape. Place your colored shape wherever!</p>
+  </section>
+
+  <section class="panel paint-shell">
+    <canvas id="paint" width="1000" height="800"
+            role="img" aria-label="Python Paint drawing canvas"></canvas>
+
+    <div class="paint-tools">
+      <button class="tool" id="clear" type="button">Clear canvas</button>
+      <button class="tool" id="save" type="button">Save as PNG</button>
+      <!-- EDIT: point this at the repo or the .py file, or delete it -->
+      <a class="tool tool--dark" href="files/PythonPaintAlpha.py" download>Download the Python source</a>
+    </div>
+
+    <p class="paint-note">
+      Pick a colour on the left, pick a shape on the right, then click anywhere to stamp it.
+    </p>
+  </section>
+
+  <div class="page-foot">
+    <a class="btn" href="index.html">Back to portfolio</a>
+  </div>
+
+</main>
+
+<script>
+/* =========================================================
+   Python Paint — canvas port
+   The drawing calls come straight from the original graphics.py
+   program: same coordinates, same palette, same three-click flow
+   (colour -> shape -> place). graphics.py sits on Tkinter, which
+   doesn't exist in a browser, and getMouse() blocks, which a
+   browser can't do — so the while-loop became a state machine.
+   ========================================================= */
+(function () {
+  "use strict";
+
+  var canvas = document.getElementById("paint");
+  var ctx = canvas.getContext("2d");
+
+  var COLORS = ["Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "Purple", "Black"];
+  var COLOR_X = 50, COLOR_R = 20;
+  var colorY = function (i) { return 200 + 50 * i; };
+
+  var stamps = [];                 // everything the user has drawn
+  var stage = "color";             // color -> shape -> place
+  var selectedColor = null;
+  var selectedShape = null;
+
+  /* ---------- drawing helpers ---------- */
+  function circle(x, y, r, fill, stroke, width) {
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+    if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = width || 1; ctx.stroke(); }
+  }
+
+  function poly(points, fill, stroke, width) {
+    ctx.beginPath();
+    ctx.moveTo(points[0][0], points[0][1]);
+    for (var i = 1; i < points.length; i++) ctx.lineTo(points[i][0], points[i][1]);
+    ctx.closePath();
+    if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+    if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = width || 1; ctx.stroke(); }
+  }
+
+  function line(x1, y1, x2, y2, stroke, width) {
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = width || 1;
+    ctx.stroke();
+  }
+
+  /* ---------- the palettes, exactly as windowSetUp() drew them ---------- */
+  function drawPalette() {
+    COLORS.forEach(function (c, i) {
+      circle(COLOR_X, colorY(i), COLOR_R, c, c, 1);
+      // a ring round the chosen colour, so the selection is visible
+      if (selectedColor === c) {
+        circle(COLOR_X, colorY(i), COLOR_R + 6, null, "#2F1E12", 3);
+      }
+    });
+
+    line(900, 220, 960, 220, "black", 7);
+    circle(930, 310, 30, "white", "black", 1);
+    poly([[905, 440], [955, 440], [930, 390]], "white", "black", 1);
+    ctx.beginPath();
+    ctx.rect(900, 500, 60, 60);
+    ctx.fillStyle = "white"; ctx.fill();
+    ctx.strokeStyle = "black"; ctx.lineWidth = 1; ctx.stroke();
+
+    if (selectedShape) {
+      var box = { Line: [210, 240], Circle: [280, 340], Triangle: [390, 440], Square: [500, 560] }[selectedShape];
+      ctx.strokeStyle = "#2F1E12";
+      ctx.lineWidth = 3;
+      ctx.strokeRect(893, box[0] - 8, 74, (box[1] - box[0]) + 16);
+    }
+  }
+
+  /* ---------- one stamped shape, from ShapeMade.draw() ---------- */
+  function drawStamp(s) {
+    if (s.shape === "Line") {
+      line(s.x - 30, s.y, s.x + 30, s.y, s.color, 7);
+    } else if (s.shape === "Circle") {
+      circle(s.x, s.y, 30, s.color, s.color, 1);
+    } else if (s.shape === "Triangle") {
+      poly([[s.x - 25, s.y + 25], [s.x + 25, s.y + 25], [s.x, s.y - 25]], s.color, s.color, 1);
+    } else if (s.shape === "Square") {
+      ctx.beginPath();
+      ctx.rect(s.x - 30, s.y - 30, 60, 60);
+      ctx.fillStyle = s.color; ctx.fill();
+      ctx.strokeStyle = s.color; ctx.lineWidth = 1; ctx.stroke();
+    }
+  }
+
+  /* ---------- the prompt line, Text at (515, 750) ---------- */
+  function message() {
+    if (stage === "color") return "Welcome to Python Paint. First, select a color!";
+    if (stage === "shape") return "Now, select a shape! Color: " + selectedColor;
+    return "Now, click anywhere! Shape: " + selectedColor + " " + selectedShape;
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    stamps.forEach(drawStamp);
+    drawPalette();
+
+    ctx.fillStyle = "black";
+    ctx.font = "18px helvetica, sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(message(), 515, 750);
+  }
+
+  /* ---------- hit testing, from didClick() and getShape() ---------- */
+  function colorAt(x, y) {
+    for (var i = 0; i < COLORS.length; i++) {
+      var dx = x - COLOR_X, dy = y - colorY(i);
+      if (Math.sqrt(dx * dx + dy * dy) <= COLOR_R) return COLORS[i];
+    }
+    return null;
+  }
+
+  function shapeAt(x, y) {
+    if (x < 900 || x > 1000) return null;
+    if (y >= 210 && y <= 240) return "Line";
+    if (y >= 280 && y <= 340) return "Circle";
+    if (y >= 390 && y <= 440) return "Triangle";
+    if (y >= 500 && y <= 560) return "Square";
+    return null;
+  }
+
+  /* the canvas is displayed smaller than its 1000x800 coordinate space,
+     so scale the pointer position back up */
+  function pointerPos(e) {
+    var r = canvas.getBoundingClientRect();
+    return {
+      x: (e.clientX - r.left) * (canvas.width / r.width),
+      y: (e.clientY - r.top) * (canvas.height / r.height)
+    };
+  }
+
+  canvas.addEventListener("click", function (e) {
+    var p = pointerPos(e);
+
+    if (stage === "color") {
+      var c = colorAt(p.x, p.y);
+      if (c) { selectedColor = c; stage = "shape"; }
+    } else if (stage === "shape") {
+      var s = shapeAt(p.x, p.y);
+      if (s) { selectedShape = s; stage = "place"; }
+      else {
+        // clicking another colour swaps it rather than doing nothing
+        var c2 = colorAt(p.x, p.y);
+        if (c2) selectedColor = c2;
+      }
+    } else {
+      stamps.push({ color: selectedColor, shape: selectedShape, x: p.x, y: p.y });
+      stage = "color";
+      selectedColor = null;
+      selectedShape = null;
+    }
+
+    render();
+  });
+
+  document.getElementById("clear").addEventListener("click", function () {
+    stamps = [];
+    stage = "color";
+    selectedColor = null;
+    selectedShape = null;
+    render();
+  });
+
+  document.getElementById("save").addEventListener("click", function () {
+    var a = document.createElement("a");
+    a.download = "python-paint.png";
+    a.href = canvas.toDataURL("image/png");
+    a.click();
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
