@@ -654,32 +654,47 @@ a.card-face { text-decoration: none; color: inherit; }
         </div>
       </article>
 
-      <!-- ---------- 6. Frog Bot ---------- -->
-      <article class="work-card" data-cat="projects">
-        <button class="card-face" aria-expanded="false" aria-controls="case-6">
-          <span class="card-thumb card-thumb--empty" aria-hidden="true">Add image</span>
-          <!-- EDIT: swap the line above for <span class="card-thumb"><img src="img/your-file.png" alt="" loading="lazy"></span> -->
-          <span class="card-meta"><span class="tag">Projects</span></span>
-          <span class="card-title">Frog Bot</span>
-          <span class="card-hint" aria-hidden="true">Read more</span>
-        </button>
+    <!-- ---------- 6. Frog Bot ---------- -->
+    <article class="work-card" data-cat="projects">
+      <button class="card-face" aria-expanded="false" aria-controls="case-frogbot">
+        <span class="card-thumb"><img src="https://i.ytimg.com/vi/Q1XKEJ3j3GA/maxresdefault.jpg" alt="" loading="lazy"></span>
+        <span class="card-meta"><span class="tag">Projects</span></span>
+        <span class="card-title"><span aria-hidden="true">&#x1318F;</span> Frog Bot <span aria-hidden="true">&#x1318F;</span></span>
+        <span class="card-hint" aria-hidden="true">Watch the demo</span>
+      </button>
 
-        <div class="case" id="case-6" hidden>
-          <div class="case-cols">
-            <div class="case-block"><h3>The problem</h3><p>Placeholder</p></div>
-            <div class="case-block"><h3>My role</h3><p>Placeholder</p></div>
-            <div class="case-block"><h3>Methods</h3><p>Placeholder</p></div>
-          </div>
-          <ol class="process">
-            <li><h4>Placeholder</h4><p>Placeholder</p></li>
-            <li><h4>Placeholder</h4><p>Placeholder</p></li>
-            <li><h4>Placeholder</h4><p>Placeholder</p></li>
-          </ol>
-          <div class="case-outcome"><h3>What I learned</h3><p>Placeholder</p></div>
-          <!-- EDIT: put the real URL in href, or delete this line if there is nothing to link to -->
-          <a class="stamp" href="#">View the final product</a>
+      <div class="case" id="case-frogbot" hidden>
+
+        <!-- Sizing lives here so this card needs no stylesheet changes.
+             width  = how big the video is (raise it to enlarge)
+             margin = the "auto" left/right is what centres it
+             aspect-ratio = keeps the 9:16 shape of a Short, so you
+                            never set a height yourself -->
+        <div class="case-video"
+             style="width: min(420px, 100%);
+                    margin: 0 auto 36px;
+                    aspect-ratio: 9 / 16;
+                    border-radius: var(--r);
+                    overflow: hidden;
+                    border: 1px solid var(--line);
+                    background: var(--surface-2);">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/Q1XKEJ3j3GA"
+            title="Frog Bot demo"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            style="width: 100%; height: 100%; border: 0; display: block;"></iframe>
         </div>
-      </article>
+
+        <!-- EDIT: when you want to write about it, add a prose block here:
+        <div class="case-prose">
+          <p>What Frog Bot is and what it does.</p>
+        </div>
+        -->
+      </div>
+    </article>
       
      <!-- ---------- 7. The Reynolds Letters ---------- -->
      <article class="work-card" data-cat="projects">
