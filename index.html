@@ -35,6 +35,18 @@ a.card-face { text-decoration: none; color: inherit; }
   text-align: center;
   padding: 10px;
 }
+
+/* sub-headings that split Publications from Abstracts */
+.pub-heading {
+  margin: 0 0 18px;
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.timeline + .pub-heading { margin-top: 40px; }
+.entry-authors { margin: 6px 0 0; }
 </style>
 </head>
 
@@ -111,6 +123,7 @@ a.card-face { text-decoration: none; color: inherit; }
     <li><a class="nav-link" href="#home"><span class="nav-text">Aiden</span><svg class="scribble" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M108 12C100 3 60 1 32 5 8 9 2 20 8 27c7 8 52 12 80 8 22-3 30-11 22-21-6-7-36-11-64-9"/></svg></a></li>
     <li><a class="nav-link" href="#about"><span class="nav-text">About</span><svg class="scribble" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M108 12C100 3 60 1 32 5 8 9 2 20 8 27c7 8 52 12 80 8 22-3 30-11 22-21-6-7-36-11-64-9"/></svg></a></li>
     <li><a class="nav-link" href="#portfolio"><span class="nav-text">Portfolio</span><svg class="scribble" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M108 12C100 3 60 1 32 5 8 9 2 20 8 27c7 8 52 12 80 8 22-3 30-11 22-21-6-7-36-11-64-9"/></svg></a></li>
+    <li><a class="nav-link" href="#publications"><span class="nav-text">Publications</span><svg class="scribble" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M108 12C100 3 60 1 32 5 8 9 2 20 8 27c7 8 52 12 80 8 22-3 30-11 22-21-6-7-36-11-64-9"/></svg></a></li>
     <li><a class="nav-link" href="#experience"><span class="nav-text">Experience</span><svg class="scribble" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M108 12C100 3 60 1 32 5 8 9 2 20 8 27c7 8 52 12 80 8 22-3 30-11 22-21-6-7-36-11-64-9"/></svg></a></li>
     <li><a class="nav-link" href="#education"><span class="nav-text">Education</span><svg class="scribble" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M108 12C100 3 60 1 32 5 8 9 2 20 8 27c7 8 52 12 80 8 22-3 30-11 22-21-6-7-36-11-64-9"/></svg></a></li>
     <li><a class="nav-link" href="#contact"><span class="nav-text">Contact</span><svg class="scribble" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M108 12C100 3 60 1 32 5 8 9 2 20 8 27c7 8 52 12 80 8 22-3 30-11 22-21-6-7-36-11-64-9"/></svg></a></li>
@@ -950,6 +963,72 @@ a.card-face { text-decoration: none; color: inherit; }
     </div>
 
     <p class="empty-state" id="emptyState" hidden>Nothing in this category yet.</p>
+  </section>
+
+  <!-- ============ PUBLICATIONS & ABSTRACTS ============ -->
+  <section class="section" id="publications">
+    <div class="panel">
+      <h2 class="section-title"><span>Publications &amp; Abstracts</span></h2>
+
+      <h3 class="pub-heading">Publications</h3>
+      <ol class="timeline">
+
+        <li class="entry">
+          <p class="entry-date">2026 <i>&middot;</i> In Press</p>
+          <h3 class="entry-role">Transforming Ethics From &ldquo;Abstract Anxiety&rdquo; to Actionable Practice in a Critical Software Design Course, But Not Beyond</h3>
+          <p class="entry-org">ACM Transactions on Computing Education (TOCE)</p>
+          <p class="entry-authors"><strong>Aiden J. Johnson</strong>, Aurelia Peterson Rajalingam, Aadarsh Padiyath, Jean Salac</p>
+        </li>
+
+        <li class="entry">
+          <p class="entry-date">2026 <i>&middot;</i> In Press</p>
+          <h3 class="entry-role">When Care Feels Rushed: Patient-Perceived Hurry and Relational Empathy in Clinical Encounters</h3>
+          <p class="entry-org">Mayo Clinic Proceedings: Innovations, Quality &amp; Outcomes</p>
+          <p class="entry-authors">Sumaya M. Yassin, Misk Al Zahidy, Omar M. Rabeaa, <strong>Aiden J. Johnson</strong>, Ana Cristina Proano, Kerly Guevara Maldonado, Juan P. Brito, Victor M. Montori</p>
+        </li>
+
+      </ol>
+
+      <h3 class="pub-heading">Abstracts</h3>
+      <ol class="timeline">
+
+        <li class="entry">
+          <p class="entry-date">October 2025</p>
+          <h3 class="entry-role">Integrating Critical Pedagogy into Software Design Education Increased Students&rsquo; Personal Effectiveness</h3>
+          <p class="entry-org">Undergraduate Research and Internship Symposium &middot; Northfield, Minnesota</p>
+          <p class="entry-authors"><strong>Aiden J. Johnson</strong>, Aurelia Peterson Rajalingam, Aadarsh Padiyath, Jean Salac</p>
+        </li>
+
+        <li class="entry">
+          <p class="entry-date">February 2026</p>
+          <h3 class="entry-role">Integrating Critical Pedagogy into Software Design Education Increased Students&rsquo; Personal Effectiveness</h3>
+          <p class="entry-org">SIGCSE Technical Symposium &middot; St. Louis, Missouri</p>
+          <p class="entry-authors"><strong>Aiden J. Johnson</strong>, Aurelia Peterson Rajalingam, Aadarsh Padiyath, Jean Salac</p>
+        </li>
+
+        <li class="entry">
+          <p class="entry-date">July 2026</p>
+          <h3 class="entry-role">Breath Beyond Visibility Technical Demonstration</h3>
+          <p class="entry-org">Institute for Liberal Arts Digital Scholarship (ILiADS) &middot; Poughkeepsie, New York</p>
+          <p class="entry-authors"><strong>Aiden J. Johnson</strong></p>
+        </li>
+
+        <li class="entry">
+          <p class="entry-date">August 2026</p>
+          <h3 class="entry-role">Developing a Local-First Platform to Assess Shared Decision-Making in Endocrine Encounters</h3>
+          <p class="entry-org">Midwest Endocrinology Society &middot; Minneapolis, Minnesota</p>
+          <p class="entry-authors"><strong>Aiden J. Johnson</strong>, Nihanth Pinnaka, Misk Al Zahidy, Karem Manresa Cumarin, Omar Rabeaa, Eva Rubio Arias, Francisco Rivadeneira, Brandon Shah, Sumaya Yassin, Juan P. Brito, Victor M. Montori</p>
+        </li>
+
+        <li class="entry">
+          <p class="entry-date">October 2026</p>
+          <h3 class="entry-role">User Experience Designer and AI Engineer Intern at Mayo Clinic&rsquo;s Knowledge and Evaluation Research Unit</h3>
+          <p class="entry-org">2026 Undergraduate Research and Internship Symposium &middot; Northfield, Minnesota</p>
+          <p class="entry-authors"><strong>Aiden J. Johnson</strong></p>
+        </li>
+
+      </ol>
+    </div>
   </section>
 
    <!-- ============ EXPERIENCE ============ -->
